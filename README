@@ -1,0 +1,19 @@
+Features:
+
+The API worker should
+  - listen to new tweets
+  - save new tweets to database
+  - notify connected clients of new changes
+
+Requests to the API should
+  - be queryable by year
+  - be sortable
+    - by ascending
+    - by descending
+
+
+- A new tweet response should
+  - contain a timestamp
+  - be saved to couchdb
+  - trigger a push event
+    - notifies all connected clients of a change
