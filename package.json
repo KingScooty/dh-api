@@ -17,14 +17,16 @@
   "author": "Scotty Vernon <scott.vernon@gmail.com> (http://wildflame.co.uk)",
   "license": "ISC",
   "devDependencies": {
-    "chai": "^3.4.1",
+    "chai": "^3.5.0",
     "eslint": "^2.4.0",
     "eslint-config-airbnb": "^6.1.0",
-    "mocha": "^2.3.4"
+    "mocha": "^2.3.4",
+    "supertest": "^1.2.0"
   },
   "dependencies": {
     "bluebird": "^3.3.4",
     "cradle": "^0.7.1",
+    "glob": "^7.0.3",
     "koa": "^2.0.0-alpha.3",
     "koa-morgan": "^1.0.1",
     "koa-router": "^7.0.1",
