@@ -1,15 +1,19 @@
 'use strict';
 const Promise = require('bluebird');
 const co = Promise.coroutine;
-const cluster = require('cluster');
+// const cluster = require('cluster');
+const Morgan = require('koa-morgan');
 
 // middleware
 
 const Koa = require('koa');
-const app = module.exports = new Koa();
+const api = module.exports = new Koa();
 
+const logger = Morgan('combined');
 const router = require('./routes/index');
 
-app
-  .use(router.routes());
+api.use(logger);
+
+api
+  .use(router.routes())
   .use(router.allowedMethods());
