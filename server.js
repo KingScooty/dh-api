@@ -5,7 +5,6 @@ process.on('exit', () => {
   console.log(`Process exit at ${(new Date).toISOString()}`);
 });
 
-// const Promise = require('bluebird');
 const api = require('./api');
 const spdy = require('spdy');
 const socketIo = require('socket.io');
