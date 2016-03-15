@@ -1,9 +1,15 @@
-// const cluster = require('cluster');
-const router = require('koa-router')();
+const glob = require('glob');
 
-router.get('/', (ctx, next) => {
-  ctx.status = 200;
-  ctx.body = 'Hello world from worker';
-});
+exports = module.exports = function Controllers(api) {
+  glob(`${__dirname}/**/*.js`, { ignore: `${__dirname}/index.js` }, (err, matches) => {
+    if (err) { throw err; }
 
-module.exports = router;
+    matches.forEach((file) => {
+      // console.log(file);
+      const controller = require(file);
+      api
+        .use(controller.routes())
+        .use(controller.allowedMethods());
+    });
+  });
+};
