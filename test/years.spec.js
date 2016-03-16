@@ -18,12 +18,12 @@ describe('Years', () => {
   // });
 
   describe('GET /years', () => {
-    it('should fetch all users', (done) => {});
+    it('should fetch all users', () => {});
   });
 
   describe('GET /years/:year', () => {
-    it('should throw 404 if year doesn\'t exist', (done) => {});
-    it('should fetch year', (done) => {});
+    it('should throw 404 if year doesn\'t exist', () => {});
+    it('should fetch year', () => {});
   });
 
 });

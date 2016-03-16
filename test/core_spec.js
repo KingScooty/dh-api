@@ -5,7 +5,7 @@ var chai = require('chai');
 var expect = chai.expect;
 chai.should();
 
-const request = supertest.agent(app.listen());
+// const request = supertest.agent(app.listen());
 const context = {};
 
 describe('API', () => {
@@ -14,11 +14,11 @@ describe('API', () => {
   // });
 
   describe('', () => {
-    it('', (done) => {});
+    it('', () => {});
   });
 
   describe('', () => {
-    it('', (done) => {});
+    it('', () => {});
   });
 
 });

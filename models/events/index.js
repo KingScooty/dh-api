@@ -1,4 +1,9 @@
-// 
+var db = require('../../db');
+
+views = {
+  all: 'tweets/all_tweets'
+}
+
 //
 //
 // var db = req.db['dh_' + req.params.year];
