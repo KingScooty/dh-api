@@ -18,8 +18,74 @@ var db = {
   dh_halloween15: c.database('digitalheroes-halloween-2015')
 };
 
+/**
+ * Creates a new database
+ *
+ * @param {Object} database
+ * @returns a promise??????
+ */
+
+
+exports.createDB = function(database) {
+  // should really return a promise.
+  database.create(function(err, res) {
+    if (err) return err;
+    return res;
+  });
+}
+
 exports.saveDoc = function() {}
 exports.allDocs = function() {}
+
+/**
+ * Creates a view in the database
+ *
+ * @param {Object} database
+ * @param {Function} callback
+ * @returns {Function} callback
+ */
+
+exports.createView = function (database, callback) {
+
+  console.log('Creating database view');
+
+  db.save('_design/tweets', {
+    all: {
+      map: function (doc) {
+        if (doc._id) emit(doc._id, doc);
+      }
+    },
+    all_tweets: {
+      map: function (doc) {
+        if (doc.type === 'tweet') emit(doc._id, doc);
+      }
+    },
+    event_info: {
+      map: function (doc) {
+        if (doc.type === 'info') emit(doc._id, doc);
+      }
+    }
+    // screen_name: {
+    //   map: function (doc) {
+    //     if (doc.user.screen_name) emit(doc.user.screen_name, doc);
+    //   }
+    // },
+    // favourited: {
+    //   map: function (doc) {
+    //     if (doc.user.screen_name && doc.favourited == true) {
+    //       emit(null, doc);
+    //     }
+    //   }
+    // }
+  }, function(err, res) {
+    if (err) {
+      console.log('error', err);
+    } else {
+      callback();
+      //TODO: Swap this for a promise;
+    }
+  });
+}
 
 /**
  * Queries database via a view, and returns response.
