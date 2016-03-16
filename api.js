@@ -10,10 +10,11 @@ const api = new Koa();
 
 const logger = Morgan('combined');
 
+const config = require('./config/');
 const errorMiddleware = require('./middleware/errors');
 api.use(errorMiddleware());
 
-const router = require('./routes/index');
+const router = require('./routes/');
 router(api);
 
 api.use(logger);
