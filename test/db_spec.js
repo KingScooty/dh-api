@@ -13,6 +13,13 @@ var client = new (cradle.Connection)(config.database.host, 5984, {
   auth: config.database.auth
 });
 
+/*
+ * This currently behaves more like an end to end test,
+ * by actually saving the data to the database.
+ * Once the kinks are sorted, mock Cradle responses to remove the
+ * need for an actual couchdb database to run the tests.
+ */
+
 var cradleDB;
 // cradleDB = client.database('db_spec_test');
 
