@@ -2,7 +2,8 @@ module.exports = {
   database: {
     host: '',
     auth: {
-
+      username: 'admin',
+      password: 'BCRmhDz4hT7g'
     }
   },
   twitter: {
