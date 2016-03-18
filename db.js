@@ -40,13 +40,13 @@ var db = {
  */
 
 
-exports.createDB = function(database) {
-  // should really return a promise.
-  database.create(function(err, res) {
-    if (err) return err;
-    return res;
-  });
-}
+// exports.createDB = function(database) {
+//   // should really return a promise.
+//   database.create(function(err, res) {
+//     if (err) return err;
+//     return res;
+//   });
+// }
 
 exports.saveDoc = function() {}
 exports.allDocs = function() {}
