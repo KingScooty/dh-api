@@ -59,7 +59,7 @@ exports.allDocs = function() {}
  * @returns {Function} callback
  */
 
-exports.createView = function (database, callback) {
+exports.createDefaultView = function (database, callback) {
 
   console.log('Creating database view');
 
@@ -79,18 +79,6 @@ exports.createView = function (database, callback) {
         if (doc.type === 'info') emit(doc._id, doc);
       }
     }
-    // screen_name: {
-    //   map: function (doc) {
-    //     if (doc.user.screen_name) emit(doc.user.screen_name, doc);
-    //   }
-    // },
-    // favourited: {
-    //   map: function (doc) {
-    //     if (doc.user.screen_name && doc.favourited == true) {
-    //       emit(null, doc);
-    //     }
-    //   }
-    // }
   }, function(err, res) {
     if (err) {
       console.log('error', err);
