@@ -1,10 +1,10 @@
 var chai = require('chai');
 var expect = chai.expect;
-var cradle = require('cradle');
-// var Promise = require('bluebird');
-// var sinon = require('sinon');
 
+var sinon = require('sinon');
 var mockCouch = require('mock-couch');
+// var mockery = require('mockery');
+var proxyquire = require('proxyquire');
 
 var Event = require('../models/events');
 var eventModel = new Event();
@@ -108,11 +108,25 @@ describe('Event', () => {
     expect(newEventModel.defaultDatabase).to.be.an.instanceOf(Object);
   });
   it.only('should set the default database to the last known event', () => {
+
+    var dbMock = {
+      connection: '',
+      databaseList: {
+        dh_2012: nano.use('digitalheroes-2012'),
+        dh_2013: nano.use('digitalheroes-2013'),
+        dh_2014: nano.use('digitalheroes-2014')
+      }
+    };
+
+    var Event = proxyquire('../models/events', {
+      '../../db': dbMock
+    });
     var newEventModel = new Event();
 
     expect(newEventModel.defaultDatabase.config.db)
-      .to.equal('digitalheroes-halloween-2015');
+      .to.equal('digitalheroes-2014');
   });
+
   // after(function(done) {
   //   cradleDB.destroy(done);
   // });
