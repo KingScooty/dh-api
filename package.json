@@ -21,6 +21,8 @@
     "eslint": "^2.4.0",
     "eslint-config-airbnb": "^6.1.0",
     "mocha": "^2.3.4",
+    "mock-couch": "^0.1.6",
+    "nano": "^6.2.0",
     "sinon": "^1.17.3",
     "supertest": "^1.2.0"
   },
