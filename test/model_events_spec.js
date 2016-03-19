@@ -72,6 +72,19 @@ describe('Mock Couch', () => {
       }
     });
   });
+
+  it('should be able to save new documents', (done) => {
+    var db = nano.db.use('dh_halloween15');
+    db.insert(tweetMock, tweetMock.id_str, function callback(err, res) {
+      if (err) {
+        console.log(err);
+      } else {
+        expect(res).to.be.ok;
+        (res.id).should.equal(tweetMock.id_str);
+        done()
+      }
+    });
+  });
 });
 
 describe('Event', () => {
@@ -91,23 +104,23 @@ describe('Event', () => {
 
   describe('findAll()', () => {
     it('', () => {});
-    it('should return all the documents from a database', (done) => {
+    it('should return all the documents from a database', () => {
       // Mock database.view inside eventModel.findAll
 
       // var database = sinon.mock(Datana);
       // database.expects('view').once().withArgs('tweets/all');
 
-      couchdb.on('GET', function(data) {
-        console.log(data);
-      });
-
-      eventModel.findAll(null, function(err, docs) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(docs);
-        }
-      });
+      // couchdb.on('GET', function(data) {
+      //   console.log(data);
+      // });
+      //
+      // eventModel.findAll(null, function(err, docs) {
+      //   if (err) {
+      //     console.log(err);
+      //   } else {
+      //     console.log(docs);
+      //   }
+      // });
 
     });
   });
