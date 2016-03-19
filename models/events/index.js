@@ -74,7 +74,7 @@ function findAll(db, callback) {
   // return new Promise(function(resolve) {
     database.view('tweets/all', function(err, result) {
       if (err) {
-        callback(error)
+        callback(err)
       } else {
         var docs = [];
         result.forEach(function (row) {
