@@ -88,6 +88,31 @@ describe('Mock Couch', () => {
 });
 
 describe('Event', () => {
+
+  // Need to mock out the db.js file.
+
+  it('should set an internal database connection', () => {
+    var newEventModel = new Event();
+
+    expect(newEventModel.connection).to.be.an.instanceOf(Object)
+      .and.have.any.keys('config', 'db');
+  });
+  it('should set an internal database list', () => {
+    var newEventModel = new Event();
+
+    expect(newEventModel.databaseList).to.be.an.instanceOf(Object)
+      .and.have.all.keys('dh_2012', 'dh_2013', 'dh_2014', 'dh_2015', 'dh_halloween15');
+  });
+  it('should set an internal default database', () => {
+    var newEventModel = new Event();
+    expect(newEventModel.defaultDatabase).to.be.an.instanceOf(Object);
+  });
+  it.only('should set the default database to the last known event', () => {
+    var newEventModel = new Event();
+
+    expect(newEventModel.defaultDatabase.config.db)
+      .to.equal('digitalheroes-halloween-2015');
+  });
   // after(function(done) {
   //   cradleDB.destroy(done);
   // });
@@ -104,23 +129,32 @@ describe('Event', () => {
 
   describe('findAll()', () => {
     it('', () => {});
-    it('should return all the documents from a database', () => {
+    it('should should not fail if not passed a database param', () => {
+
+    });
+
+    it('should return all the documents from a default database when unspecified', (done) => {
       // Mock database.view inside eventModel.findAll
 
       // var database = sinon.mock(Datana);
       // database.expects('view').once().withArgs('tweets/all');
 
-      // couchdb.on('GET', function(data) {
-      //   console.log(data);
-      // });
-      //
-      // eventModel.findAll(null, function(err, docs) {
-      //   if (err) {
-      //     console.log(err);
-      //   } else {
-      //     console.log(docs);
-      //   }
-      // });
+      couchdb.on('GET', function(data) {
+        console.log(data);
+        done();
+      });
+
+      eventModel.findAll(null, function(err, docs) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(docs);
+        }
+      });
+
+    });
+
+    it('should return all documents from a specified database', () => {
 
     });
   });
