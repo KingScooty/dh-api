@@ -1,5 +1,3 @@
-// var cradle = require('cradle');
-var Promise = require('bluebird');
 var db = require('../../db');
 
 var lastInObject = require('../../helpers/last_in_object');
@@ -111,8 +109,6 @@ function findByType(db, docType, callback) {
     database = this.defaultDatabase;
   }
 
-  // console.log(docType);
-
   database.view('tweets', docType, function(err, body) {
     if (err) {
       callback(error)
@@ -153,52 +149,4 @@ function save(db, tweet) {
   });
 }
 
-/*
-EventModel.prototype.findTweets = function(callback) {
-  this.defaultDB.view('tweets/all_tweets', function(err, result) {
-    if (err) {
-      callback(error)
-    } else {
-      var docs = [];
-      result.forEach(function (row) {
-        docs.push(row);
-      });
-      callback(null, docs);
-    }
-  });
-};
-
-EventModel.prototype.findTweets = function(callback) {
-  this.defaultDB.view('tweets/event_info', function(err, result) {
-    if (err) {
-      callback(error)
-    } else {
-      var docs = [];
-      result.forEach(function (row) {
-        docs.push(row);
-      });
-      callback(null, docs);
-    }
-  });
-};
-*/
-
-
-// exports.EventModel = EventModel;
 module.exports = EventModel;
-
-//
-//
-// var db = req.db['dh_' + req.params.year];
-//
-// try {
-//   db.view('tweets/all_tweets', function callback(err, response) {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       res.json(response);
-//     }
-//   });
-// } catch (exeception) {
-//   res.send(404);
-// }
