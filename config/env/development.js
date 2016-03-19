@@ -1,10 +1,6 @@
 module.exports = {
   database: {
-    host: '127.0.0.1',
-    // auth: {
-    //   username: '', //admin
-    //   password: '' //BCRmhDz4hT7g
-    // }
+    host: '127.0.0.1:5984'
   },
   twitter: {
     consumer_key: process.env.CONSUMER_KEY,

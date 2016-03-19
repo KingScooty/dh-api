@@ -1,9 +1,6 @@
 module.exports = {
   database: {
-    host: '',
-    auth: {
-
-    }
+    host: ''
   },
   twitter: {
     consumer_key: process.env.CONSUMER_KEY,
