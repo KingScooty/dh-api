@@ -1,17 +1,7 @@
-const cradle = require('cradle');
-// const nano = require('nano');
+const config = require('./config/');
+const host =  config.database.host;
 
-var config = require('./config/');
-var auth =  config.database.auth;
-var host = config.database.host;
-
-// var nano = require('nano')('http://localhost:5984');
-
-var c = new (cradle.Connection)(host, 5984, {
-  cache: true,
-  raw: false,
-  auth: auth
-});
+var nano = require('nano')(`http://${host}`);
 
 /*
   http://couchdb-3c369e79-1.kingscooty.cont.tutum.io:5984/_all_dbs
@@ -28,12 +18,12 @@ var c = new (cradle.Connection)(host, 5984, {
 */
 
 var databaseList = {
-  dh_2012: c.database('digitalheroes-2012'),
-  dh_2013: c.database('digitalheroes-2013'),
-  dh_2014: c.database('digitalheroes-2014'),
-  dh_2015: c.database('digitalheroes-2015'),
-  dh_halloween15: c.database('digitalheroes-halloween-2015')
+  dh_2012: nano.use('digitalheroes-2012'),
+  dh_2013: nano.use('digitalheroes-2013'),
+  dh_2014: nano.use('digitalheroes-2014'),
+  dh_2015: nano.use('digitalheroes-2015'),
+  dh_halloween15: nano.use('digitalheroes-halloween-2015')
 };
 
-module.exports.connection = c;
+module.exports.connection = nano;
 module.exports.databaseList = databaseList;

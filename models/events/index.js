@@ -1,4 +1,4 @@
-var cradle = require('cradle');
+// var cradle = require('cradle');
 var Promise = require('bluebird');
 var db = require('../../db');
 
@@ -29,29 +29,29 @@ function syncDesignDoc(db, callback) {
     database = this.defaultDatabase;
   }
 
-  database.save('_design/tweets', {
-    all: {
-      map: function (doc) {
-        if (doc._id) emit(doc._id, doc);
-      }
-    },
-    all_tweets: {
-      map: function (doc) {
-        if (doc.type === 'tweet') emit(doc._id, doc);
-      }
-    },
-    event_info: {
-      map: function (doc) {
-        if (doc.type === 'info') emit(doc._id, doc);
+  database.insert({
+    "views": {
+      "all": {
+        map: function(doc) {
+          if (doc._id) emit(doc._id, doc);
+        }
+      },
+      "all_tweets": {
+        map: function (doc) {
+          if (doc.type === 'tweet') emit(doc._id, doc);
+        }
+      },
+      "event_info": {
+        map: function (doc) {
+          if (doc.type === 'info') emit(doc._id, doc);
+        }
       }
     }
-  }, function(err, res) {
-    if (err) {
-      console.log('error', err);
-    } else {
+  }, '_design/tweets', function(err, response) {
+    // console.log(err);
+    // console.log(response);
+    if (!err)
       callback();
-      //TODO: Swap this for a promise;
-    }
   });
 };
 
@@ -72,7 +72,7 @@ function findAll(db, callback) {
   }
 
   // return new Promise(function(resolve) {
-    database.view('tweets/all', function(err, result) {
+    database.view('tweets', 'all', function(err, result) {
       if (err) {
         callback(err)
       } else {
@@ -104,7 +104,7 @@ function findByType(db, docType, callback) {
     database = this.defaultDatabase;
   }
 
-  database.view(`tweets/${docType}`, function(err, result) {
+  database.view('tweets', docType, function(err, result) {
     if (err) {
       callback(error)
     } else {
@@ -133,7 +133,7 @@ function save(db, tweet) {
     database = this.defaultDatabase;
   }
 
-  database.save(tweet.id_str, tweet, function callback(err, res) {
+  database.insert(tweet, tweet.id_str, function callback(err, res) {
     if (err) {
       console.log(err);
     } else {
