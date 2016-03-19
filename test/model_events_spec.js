@@ -276,13 +276,31 @@ describe('Event', () => {
       });
     });
 
-    it('should return all documents by event type only from specified database', () => {
+    it('should return all documents by event type only from specified database', (done) => {
+
       var newEventModel = new Event();
+
+      newEventModel.findByType('dh_2016', 'event_info', function(err, response) {
+        if (err) return console.log(err);
+        expect(response).to.be.ok;
+        expect(response).to.have.length(1);
+        expect(response[0].id).to.equal(eventMock1._id);
+        done();
+      });
 
     });
 
-    it('should return all documents by tweet type only from specified database', () => {
+    it('should return all documents by tweet type only from specified database', (done) => {
+
       var newEventModel = new Event();
+
+      newEventModel.findByType('dh_2016', 'all_tweets', function(err, response) {
+        if (err) return console.log(err);
+        expect(response).to.be.ok;
+        expect(response).to.have.length(1);
+        expect(response[0].value.id_str).to.equal(tweetMock0.id_str);
+        done();
+      });
 
     });
   });
