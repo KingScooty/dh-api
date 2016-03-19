@@ -65,6 +65,8 @@ function syncDesignDoc(db, callback) {
 EventModel.prototype.findAll =
 function findAll(db, callback) {
 
+  var database;
+
   if (typeof db === "string" || db instanceof String) {
     database = this.databaseList[database]
   } else {
@@ -98,6 +100,8 @@ function findAll(db, callback) {
 EventModel.prototype.findByType =
 function findByType(db, docType, callback) {
 
+  var database;
+
   if (typeof db === "string" || db instanceof String) {
     database = this.databaseList[database]
   } else {
@@ -126,6 +130,8 @@ function findByType(db, docType, callback) {
 
 EventModel.prototype.save =
 function save(db, tweet) {
+
+  var database;
 
   if (typeof db === "string" || db instanceof String) {
     database = this.databaseList[database]
