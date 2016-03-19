@@ -6,7 +6,6 @@ var mockCouch = require('mock-couch');
 var proxyquire = require('proxyquire');
 
 var Event = require('../models/events');
-var eventModel = new Event();
 
 var tweetMock0 = require('./mocks/tweet0.json');
 var tweetMock1 = require('./mocks/tweet1.json');
@@ -209,6 +208,7 @@ describe('Event', () => {
 
   describe('syncDesignDoc()', () => {
     it('should save the latest design doc to the default database', (done) => {
+
       var newEventModel = new Event();
 
       newEventModel.syncDesignDoc(null, function(err, response) {
@@ -217,9 +217,11 @@ describe('Event', () => {
         expect(response.id).to.equal('_design/tweets');
         done();
       });
+
     });
 
     it('should save the latest design doc to a specified database', (done) => {
+
       var newEventModel = new Event();
 
       newEventModel.syncDesignDoc('dh_2016', function(err, response) {
@@ -228,33 +230,37 @@ describe('Event', () => {
         expect(response.id).to.equal('_design/tweets');
         done();
       });
+
     });
   });
 
   describe('findAll()', () => {
-    it('', () => {});
-    it('should should not fail if not passed a database param', () => {
+    it('should return the all docs from the default database', (done) => {
+
+      var newEventModel = new Event();
+
+      newEventModel.findAll(null, function(err, response) {
+        if (err) return console.log(err);
+        expect(response).to.be.ok;
+        expect(response).to.have.length(2);
+        expect(response[0].value.id_str).to.equal(tweetMock0.id_str);
+        expect(response[1].value.id_str).to.equal(tweetMock1.id_str);
+        done();
+      });
 
     });
 
-    it('should return all the documents from a default database when unspecified', () => {
-      // Mock database.view inside eventModel.findAll
+    it('should return the all docs from the a specified database', (done) => {
 
-      // var database = sinon.mock(Datana);
-      // database.expects('view').once().withArgs('tweets/all');
+      var newEventModel = new Event();
 
-      // couchdb.on('GET', function(data) {
-      //   console.log(data);
-      //   done();
-      // });
-      //
-      // eventModel.findAll(null, function(err, docs) {
-      //   if (err) {
-      //     console.log(err);
-      //   } else {
-      //     console.log(docs);
-      //   }
-      // });
+      newEventModel.findAll('dh_2016', function(err, response) {
+        if (err) return console.log(err);
+        expect(response).to.be.ok;
+        expect(response[0].value.id_str).to.equal(tweetMock0.id_str);
+        expect(response).to.have.length(1);
+        done();
+      });
 
     });
 

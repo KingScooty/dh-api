@@ -81,20 +81,15 @@ function findAll(db, callback) {
     database = this.defaultDatabase;
   }
 
-  // return new Promise(function(resolve) {
-    database.view('tweets', 'all', function(err, result) {
-      if (err) {
-        callback(err)
-      } else {
-        var docs = [];
-        result.forEach(function (row) {
-          docs.push(row);
-        });
-        // resolve(null, docs);
-        callback(null, docs);
-      }
+  database.view('tweets', 'all', function(err, body) {
+    if (err) return callback(err);
+
+    var docs = [];
+    body.rows.forEach(function (row) {
+      docs.push(row);
     });
-  // });
+    callback(null, docs);
+  });
 
 };
 
