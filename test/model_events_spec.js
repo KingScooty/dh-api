@@ -89,7 +89,23 @@ describe('Mock Couch', () => {
 
 describe('Event', () => {
 
+  var Event;
+
   // Need to mock out the db.js file.
+  before(function() {
+    var dbMock = {
+      connection: nano,
+      databaseList: {
+        dh_2012: nano.use('digitalheroes-2012'),
+        dh_2013: nano.use('digitalheroes-2013'),
+        dh_2014: nano.use('digitalheroes-2014')
+      }
+    };
+
+    Event = proxyquire('../models/events', {
+      '../../db': dbMock
+    });
+  });
 
   it('should set an internal database connection', () => {
     var newEventModel = new Event();
@@ -101,26 +117,13 @@ describe('Event', () => {
     var newEventModel = new Event();
 
     expect(newEventModel.databaseList).to.be.an.instanceOf(Object)
-      .and.have.all.keys('dh_2012', 'dh_2013', 'dh_2014', 'dh_2015', 'dh_halloween15');
+      .and.have.all.keys('dh_2012', 'dh_2013', 'dh_2014');
   });
   it('should set an internal default database', () => {
     var newEventModel = new Event();
     expect(newEventModel.defaultDatabase).to.be.an.instanceOf(Object);
   });
-  it.only('should set the default database to the last known event', () => {
-
-    var dbMock = {
-      connection: '',
-      databaseList: {
-        dh_2012: nano.use('digitalheroes-2012'),
-        dh_2013: nano.use('digitalheroes-2013'),
-        dh_2014: nano.use('digitalheroes-2014')
-      }
-    };
-
-    var Event = proxyquire('../models/events', {
-      '../../db': dbMock
-    });
+  it('should set the default database to the last known event', () => {
     var newEventModel = new Event();
 
     expect(newEventModel.defaultDatabase.config.db)
