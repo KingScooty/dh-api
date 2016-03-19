@@ -21,7 +21,7 @@ var client = new (cradle.Connection)(config.database.host, 5984, {
  */
 
 var cradleDB;
-// cradleDB = client.database('db_spec_test');
+cradleDB = client.database('db_spec_test');
 
 var createTestDB = function createTestDB() {
   return new Promise(function(resolve) {
@@ -61,81 +61,24 @@ var saveData = function saveData() {
 chai.should();
 describe('Database helpers', () => {
 
+/*
   before(function(done) {
     createTestDB()
       // .then(saveData)
       .then(done);
   });
-
-
+*/
   // after(function(done) {
-    // cradleDB.destroy(done);
+  //   cradleDB.destroy(done);
   // });
-/*
+
   describe('saveView()', () => {
 
-    it('should save a view', (done) => {
-      cradleDB.save('_design/tweets', {
-        all: {
-          map: function (doc) {
-            if (doc._id) emit(doc._id, doc);
-          }
-        },
-        all_tweets: {
-          map: function (doc) {
-            if (doc.type === 'tweet') emit(doc._id, doc);
-          }
-        },
-        event_info: {
-          map: function (doc) {
-            if (doc.type === 'info') emit(doc._id, doc);
-          }
-        }
-        // screen_name: {
-        //   map: function (doc) {
-        //     if (doc.user.screen_name) emit(doc.user.screen_name, doc);
-        //   }
-        // },
-        // favourited: {
-        //   map: function (doc) {
-        //     if (doc.user.screen_name && doc.favourited == true) {
-        //       emit(null, doc);
-        //     }
-        //   }
-        // }
-      }, function(err, res) {
-        if (err) {
-          console.log('error', err);
-        } else {
-          done();
-        }
-      });
+    it('should save a view', () => {
     });
 
-    it('should save more to the view without erroring?', (done) => {
-      cradleDB.save('_design/tweets', {
-        screen_name: {
-          map: function (doc) {
-            if (doc.user.screen_name) emit(doc.user.screen_name, doc);
-          }
-        },
-        favourited: {
-          map: function (doc) {
-            if (doc.user.screen_name && doc.favourited == true) {
-              emit(null, doc);
-            }
-          }
-        }
-      }, function(err, res) {
-        if (err) {
-          console.log('error', err);
-        } else {
-          done();
-        }
-      });
-    });
   });
-*/
+
   describe('saveDoc()', () => {
     it('', () => {});
   });
