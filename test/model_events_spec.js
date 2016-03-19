@@ -10,6 +10,9 @@ var Event = require('../models/events');
 var tweetMock0 = require('./mocks/tweet0.json');
 var tweetMock1 = require('./mocks/tweet1.json');
 
+var eventMock0 = require('./mocks/event_info0.json');
+var eventMock1 = require('./mocks/event_info1.json');
+
 var couchdb;
 var nano = require('nano')('http://localhost:5984');
 
@@ -62,6 +65,11 @@ describe('Mock Couch', () => {
         if (err) return console.log(err);
           expect(response).to.be.ok;
       });
+
+      db.insert(eventMock0, function(err, response) {
+        if (err) return console.log(err);
+        expect(response).to.be.ok;
+      });
     });
 
     nano.db.create('dh_2016_test', function(err, response) {
@@ -72,8 +80,13 @@ describe('Mock Couch', () => {
       var db = nano.use('dh_2016_test');
       db.insert(tweetMock0, tweetMock0.id_str, function(err, response) {
         if (err) return console.log(err);
-          expect(response).to.be.ok;
-          done();
+        expect(response).to.be.ok;
+      });
+
+      db.insert(eventMock1, function(err, response) {
+        if (err) return console.log(err);
+        expect(response).to.be.ok;
+        done();
       });
     });
 
@@ -242,9 +255,10 @@ describe('Event', () => {
       newEventModel.findAll(null, function(err, response) {
         if (err) return console.log(err);
         expect(response).to.be.ok;
-        expect(response).to.have.length(2);
+        expect(response).to.have.length(3);
         expect(response[0].value.id_str).to.equal(tweetMock0.id_str);
         expect(response[1].value.id_str).to.equal(tweetMock1.id_str);
+        expect(response[2].id).to.equal(eventMock0._id);
         done();
       });
 
@@ -257,20 +271,54 @@ describe('Event', () => {
       newEventModel.findAll('dh_2016', function(err, response) {
         if (err) return console.log(err);
         expect(response).to.be.ok;
+        expect(response).to.have.length(2);
         expect(response[0].value.id_str).to.equal(tweetMock0.id_str);
-        expect(response).to.have.length(1);
+        expect(response[1].id).to.equal(eventMock1._id);
         done();
       });
-
-    });
-
-    it('should return all documents from a specified database', () => {
 
     });
   });
 
   describe('findByType()', () => {
-    it('should return all documents by type from a database', () => {});
+
+    it('should return all documents by event type only from default database', (done) => {
+
+      var newEventModel = new Event();
+
+      newEventModel.findByType(null, 'event_info', function(err, response) {
+        if (err) return console.log(err);
+        expect(response).to.be.ok;
+        expect(response).to.have.length(1);
+        expect(response[0].id).to.equal(eventMock0._id);
+        done();
+      });
+
+    });
+
+    it('should return all documents by tweet type only from default database', (done) => {
+
+      var newEventModel = new Event();
+
+      newEventModel.findByType(null, 'all_tweets', function(err, response) {
+        if (err) return console.log(err);
+        expect(response).to.be.ok;
+        expect(response).to.have.length(2);
+        expect(response[0].value.id_str).to.equal(tweetMock0.id_str);
+        expect(response[1].value.id_str).to.equal(tweetMock1.id_str);
+        done();
+      });
+    });
+
+    it('should return all documents by event type only from specified database', () => {
+      var newEventModel = new Event();
+
+    });
+
+    it('should return all documents by tweet type only from specified database', () => {
+      var newEventModel = new Event();
+
+    });
   });
 
   describe('saveDoc()', () => {

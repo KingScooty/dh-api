@@ -111,12 +111,14 @@ function findByType(db, docType, callback) {
     database = this.defaultDatabase;
   }
 
-  database.view('tweets', docType, function(err, result) {
+  // console.log(docType);
+
+  database.view('tweets', docType, function(err, body) {
     if (err) {
       callback(error)
     } else {
       var docs = [];
-      result.forEach(function (row) {
+      body.rows.forEach(function (row) {
         docs.push(row);
       });
       callback(null, docs);
