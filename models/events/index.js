@@ -29,7 +29,7 @@ function syncDesignDoc(db, callback) {
     database = this.defaultDatabase;
   }
 
-  database.insert({
+  var design = {
     "views": {
       "all": {
         map: function(doc) {
@@ -47,11 +47,14 @@ function syncDesignDoc(db, callback) {
         }
       }
     }
-  }, '_design/tweets', function(err, response) {
-    // console.log(err);
-    // console.log(response);
-    if (!err)
-      callback();
+  };
+
+  database.insert(design, '_design/tweets', function(err, response) {
+    if (err) {
+      callback(err);
+    } else {
+      callback(response);
+    }
   });
 };
 
