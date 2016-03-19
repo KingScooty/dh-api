@@ -21,18 +21,34 @@ describe('Mock Couch', () => {
   before(function() {
     couchdb = mockCouch.createServer();
     couchdb.listen(5984);
-    couchdb.addDB('dh_halloween15', [tweetMock]);
 
-    couchdb.addDoc('dh_halloween15', {
-      _id: '_design/tweets',
-      views : {
-        all: {
-          map: function (doc) {
-            if (doc._id) emit(doc._id, doc);
+    // couchdb.addDB('dh_2012', [tweetMock]);
+    // couchdb.addDB('dh_2013', [tweetMock]);
+    // couchdb.addDB('dh_2014', [tweetMock]);
+    // couchdb.addDB('dh_2015', [tweetMock]);
+    // couchdb.addDB('dh_halloween15', [tweetMock]);
+
+    var dbNames = [
+      'dh_2012',
+      'dh_2013',
+      'dh_2014',
+      'dh_2015',
+      'dh_halloween15'
+    ];
+
+    for (var i = 0; i < dbNames.length; i++) {
+      couchdb.addDB(dbNames[i], [tweetMock]);
+      couchdb.addDoc(dbNames[i], {
+        _id: '_design/tweets',
+        views : {
+          all: {
+            map: function (doc) {
+              if (doc._id) emit(doc._id, doc);
+            }
           }
         }
-      }
-    });
+      });
+    }
   });
 
   it('should contain documents', (done) => {
@@ -59,10 +75,6 @@ describe('Mock Couch', () => {
 });
 
 describe('Event', () => {
-
-
-
-
   // after(function(done) {
   //   cradleDB.destroy(done);
   // });
@@ -78,23 +90,24 @@ describe('Event', () => {
   });
 
   describe('findAll()', () => {
-    it('should return all the documents from a database', () => {
+    it('', () => {});
+    it('should return all the documents from a database', (done) => {
       // Mock database.view inside eventModel.findAll
 
       // var database = sinon.mock(Datana);
       // database.expects('view').once().withArgs('tweets/all');
 
-      // couchdb.on('GET', function(data) {
-      //   console.log(data);
-      // });
+      couchdb.on('GET', function(data) {
+        console.log(data);
+      });
 
-      // eventModel.findAll(null, function(err, docs) {
-      //   if (err) {
-      //     console.log(err);
-      //   } else {
-      //     console.log(docs);
-      //   }
-      // });
+      eventModel.findAll(null, function(err, docs) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(docs);
+        }
+      });
 
     });
   });
