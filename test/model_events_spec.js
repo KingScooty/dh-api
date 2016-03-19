@@ -3,7 +3,6 @@ var expect = chai.expect;
 
 var sinon = require('sinon');
 var mockCouch = require('mock-couch');
-// var mockery = require('mockery');
 var proxyquire = require('proxyquire');
 
 var Event = require('../models/events');
@@ -73,6 +72,50 @@ describe('Mock Couch', () => {
     });
   });
 
+/*
+  it('should be able to update the design document', (done) => {
+    var db = nano.db.use('dh_halloween15');
+
+    var design = {
+      "views": {
+        "all": {
+          map: function(doc) {
+            if (doc._id) emit(doc._id, doc);
+          }
+        },
+        "all_tweets": {
+          map: function (doc) {
+            if (doc.type === 'tweet') emit(doc._id, doc);
+          }
+        },
+        "event_info": {
+          map: function (doc) {
+            if (doc.type === 'info') emit(doc._id, doc);
+          }
+        }
+      }
+    };
+
+    db.update = function(obj, key, callback) {
+      var db = this;
+      db.get(key, function (error, existing) {
+        if(!error) obj._rev = existing._rev;
+        db.insert(obj, key, callback);
+      });
+    }
+
+    db.update(design, '_design/tweets', function(err, res) {
+      if (err) return console.log(err);
+      console.log('Updated!');
+    });
+    // db.insert(design, '_design/tweets', function(err, res) {
+    //   if (err) return console.log(err);
+    //   console.log('Inserted!');
+    // });
+
+  });
+*/
+
   it('should be able to save new documents', (done) => {
     var db = nano.db.use('dh_halloween15');
     db.insert(tweetMock, tweetMock.id_str, function callback(err, res) {
@@ -91,7 +134,6 @@ describe('Event', () => {
 
   var Event;
 
-  // Need to mock out the db.js file.
   before(function() {
     var dbMock = {
       connection: nano,
@@ -113,16 +155,19 @@ describe('Event', () => {
     expect(newEventModel.connection).to.be.an.instanceOf(Object)
       .and.have.any.keys('config', 'db');
   });
+
   it('should set an internal database list', () => {
     var newEventModel = new Event();
 
     expect(newEventModel.databaseList).to.be.an.instanceOf(Object)
       .and.have.all.keys('dh_2012', 'dh_2013', 'dh_2014');
   });
+
   it('should set an internal default database', () => {
     var newEventModel = new Event();
     expect(newEventModel.defaultDatabase).to.be.an.instanceOf(Object);
   });
+
   it('should set the default database to the last known event', () => {
     var newEventModel = new Event();
 
@@ -135,12 +180,14 @@ describe('Event', () => {
   // });
 
   describe('syncDesignDoc()', () => {
-    it('should save the latest design doc to database', () => {
+    it('should save the latest design doc to database', (done) => {
       // console.log(Event());
 
-      // var database = sinon.mock(database)
-      // Need to stub out database = this.databaseList[database]
-      // Event.syncDesignDoc('');
+      var newEventModel = new Event();
+      newEventModel.syncDesignDoc(null, function(err, response) {
+        if (err) return console.log(err);
+        console.log(response);
+      });
     });
   });
 
@@ -156,18 +203,18 @@ describe('Event', () => {
       // var database = sinon.mock(Datana);
       // database.expects('view').once().withArgs('tweets/all');
 
-      couchdb.on('GET', function(data) {
-        console.log(data);
-        done();
-      });
-
-      eventModel.findAll(null, function(err, docs) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(docs);
-        }
-      });
+      // couchdb.on('GET', function(data) {
+      //   console.log(data);
+      //   done();
+      // });
+      //
+      // eventModel.findAll(null, function(err, docs) {
+      //   if (err) {
+      //     console.log(err);
+      //   } else {
+      //     console.log(docs);
+      //   }
+      // });
 
     });
 
