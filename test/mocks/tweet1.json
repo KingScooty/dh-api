@@ -1,0 +1,152 @@
+{
+  "_id":"660518825281089536",
+  "_rev":"2-6a44f55834752f8b16586fca8a78b327",
+  "created_at":"Sat Oct 31 18:08:54 +0000 2015",
+  "id":660518825281089500,
+  "id_str":"660518825281089536",
+  "text":"Calm before the storm. #halloweenheroes2015 (@ Rudy's in Manchester w/ @madebymagnolia) https://t.co/1SSyXm5k9R",
+  "source":"<a href=\"http://foursquare.com\" rel=\"nofollow\">Foursquare</a>",
+  "truncated":false,
+  "in_reply_to_status_id":null,
+  "in_reply_to_status_id_str":null,
+  "in_reply_to_user_id":null,
+  "in_reply_to_user_id_str":null,
+  "in_reply_to_screen_name":null,
+  "user":{
+    "id":9351682,
+    "id_str":"9351682",
+    "name":"Scotty Vernon",
+    "screen_name":"KingScooty",
+    "location":"NQ, Manchester, England",
+    "url":"http://wildflame.co.uk",
+    "description":"Creative Dev currently consulting at @BBCRD. Director of @wearewildflame. Obsessive perfectionist. LFC follower; Nintendo fan boy; RasPi & Arduino enthusiast",
+    "protected":false,
+    "verified":false,
+    "followers_count":659,
+    "friends_count":349,
+    "listed_count":51,
+    "favourites_count":786,
+    "statuses_count":11197,
+    "created_at":"Wed Oct 10 13:33:47 +0000 2007",
+    "utc_offset":0,
+    "time_zone":"London",
+    "geo_enabled":true,
+    "lang":"en",
+    "contributors_enabled":false,
+    "is_translator":false,
+    "profile_background_color":"181818",
+    "profile_background_image_url":"http://pbs.twimg.com/profile_background_images/118975436/twitter_bg-kingscooty-v2.jpg",
+    "profile_background_image_url_https":"https://pbs.twimg.com/profile_background_images/118975436/twitter_bg-kingscooty-v2.jpg",
+    "profile_background_tile":false,
+    "profile_link_color":"64BDE3",
+    "profile_sidebar_border_color":"FFFFFF",
+    "profile_sidebar_fill_color":"252429",
+    "profile_text_color":"555555",
+    "profile_use_background_image":true,
+    "profile_image_url":"http://pbs.twimg.com/profile_images/484369772956491776/G7SN_jz4_normal.png",
+    "profile_image_url_https":"https://pbs.twimg.com/profile_images/484369772956491776/G7SN_jz4_normal.png",
+    "profile_banner_url":"https://pbs.twimg.com/profile_banners/9351682/1420746320",
+    "default_profile":false,
+    "default_profile_image":false,
+    "following":null,
+    "follow_request_sent":null,
+    "notifications":null
+  },
+  "geo":{
+    "type":"Point",
+    "coordinates":[
+      53.48462424000000226,
+      -2.2292432799999999382
+    ]
+  },
+  "coordinates":{
+    "type":"Point",
+    "coordinates":[
+      -2.2292432799999999382,
+      53.48462424000000226
+    ]
+  },
+  "place":{
+    "id":"315b740b108481f6",
+    "url":"https://api.twitter.com/1.1/geo/id/315b740b108481f6.json",
+    "place_type":"city",
+    "name":"Manchester",
+    "full_name":"Manchester, England",
+    "country_code":"GB",
+    "country":"United Kingdom",
+    "bounding_box":{
+      "type":"Polygon",
+      "coordinates":[
+        [
+          [
+            -2.3199339999999999407,
+            53.3436230000000009
+          ],
+          [
+            -2.3199339999999999407,
+            53.570281999999998845
+          ],
+          [
+            -2.147025999999999879,
+            53.570281999999998845
+          ],
+          [
+            -2.147025999999999879,
+            53.3436230000000009
+          ]
+        ]
+      ]
+    },
+    "attributes":{
+
+    }
+  },
+  "contributors":null,
+  "is_quote_status":false,
+  "retweet_count":0,
+  "favorite_count":0,
+  "entities":{
+    "hashtags":[
+      {
+        "text":"halloweenheroes2015",
+        "indices":[
+          23,
+          43
+        ]
+      }
+    ],
+    "urls":[
+      {
+        "url":"https://t.co/1SSyXm5k9R",
+        "expanded_url":"https://www.swarmapp.com/c/lNLbZmhckmp",
+        "display_url":"swarmapp.com/c/lNLbZmhckmp",
+        "indices":[
+          88,
+          111
+        ]
+      }
+    ],
+    "user_mentions":[
+      {
+        "screen_name":"madebymagnolia",
+        "name":"Paul Jackson",
+        "id":14179118,
+        "id_str":"14179118",
+        "indices":[
+          71,
+          86
+        ]
+      }
+    ],
+    "symbols":[
+
+    ]
+  },
+  "favorited":false,
+  "retweeted":false,
+  "possibly_sensitive":false,
+  "filter_level":"low",
+  "lang":"en",
+  "timestamp_ms":"1446314934450",
+  "type":"tweet"
+}
