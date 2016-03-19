@@ -11,9 +11,10 @@ var eventModel = new Event();
 
 var tweetMock = require('./mocks/tweet.json');
 
-chai.should();
-
 var couchdb;
+var nano = require('nano')('http://localhost:5984');
+
+chai.should();
 
 describe('Mock Couch', () => {
 
@@ -35,12 +36,25 @@ describe('Mock Couch', () => {
   });
 
   it('should contain documents', (done) => {
-    var nano = require('nano')('http://localhost:5984');
     var db = nano.db.use('dh_halloween15');
     db.get('654788497228742656', function(err, body) {
       if (!err)
         done();
-    })
+    });
+  });
+
+  it('should contain a design document', (done) => {
+    var db = nano.db.use('dh_halloween15');
+    db.view('tweets', 'all', function(err, body) {
+      if (!err) {
+        var docs = [];
+        body.rows.forEach(function(doc) {
+          docs.push(doc);
+        });
+        (docs[0].value.id).should.equal(tweetMock.id);
+        done();
+      }
+    });
   });
 });
 
@@ -54,7 +68,7 @@ describe('Event', () => {
   // });
 
   describe('syncDesignDoc()', () => {
-    it('should save the latest design doc to database', (done) => {
+    it('should save the latest design doc to database', () => {
       // console.log(Event());
 
       // var database = sinon.mock(database)
@@ -64,7 +78,7 @@ describe('Event', () => {
   });
 
   describe('findAll()', () => {
-    it('should return all the documents from a database', (done) => {
+    it('should return all the documents from a database', () => {
       // Mock database.view inside eventModel.findAll
 
       // var database = sinon.mock(Datana);
