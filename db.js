@@ -1,8 +1,11 @@
 const cradle = require('cradle');
+// const nano = require('nano');
 
 var config = require('./config/');
 var auth =  config.database.auth;
 var host = config.database.host;
+
+// var nano = require('nano')('http://localhost:5984');
 
 var c = new (cradle.Connection)(host, 5984, {
   cache: true,
