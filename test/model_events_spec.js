@@ -2,7 +2,6 @@ var chai = require('chai');
 var expect = chai.expect;
 
 var sinon = require('sinon');
-var mockCouch = require('mock-couch');
 var proxyquire = require('proxyquire');
 
 var Event = require('../models/events');
@@ -21,39 +20,6 @@ chai.should();
 describe('Mock Couch', () => {
 
   before(function(done) {
-/*
-    couchdb = mockCouch.createServer();
-    couchdb.listen(5984);
-
-    // couchdb.addDB('dh_2012', [tweetMock0]);
-    // couchdb.addDB('dh_2013', [tweetMock0]);
-    // couchdb.addDB('dh_2014', [tweetMock0]);
-    // couchdb.addDB('dh_2015', [tweetMock0]);
-    // couchdb.addDB('dh_halloween15', [tweetMock0]);
-
-    var dbNames = [
-      'dh_2012',
-      'dh_2013',
-      'dh_2014',
-      'dh_2015',
-      'dh_halloween15'
-    ];
-
-    for (var i = 0; i < dbNames.length; i++) {
-      couchdb.addDB(dbNames[i], [tweetMock0]);
-      couchdb.addDoc(dbNames[i], {
-        _id: '_design/tweets',
-        views : {
-          all: {
-            map: function (doc) {
-              if (doc._id) emit(doc._id, doc);
-            }
-          }
-        }
-      });
-    }
-*/
-
 
     nano.db.create('dh_halloween15_test', function(err, response) {
 
