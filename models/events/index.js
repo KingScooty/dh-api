@@ -24,7 +24,7 @@ function syncDesignDoc(db, callback) {
   var database;
 
   if (typeof db === "string" || db instanceof String) {
-    database = this.databaseList[database]
+    database = this.databaseList[db];
   } else {
     database = this.defaultDatabase;
   }
@@ -49,13 +49,6 @@ function syncDesignDoc(db, callback) {
     }
   };
 
-  // database.insert(design, '_design/tweets', function(err, response) {
-  //   if (err) {
-  //     callback(err);
-  //   } else {
-  //     callback(response);
-  //   }
-  // });
   database.update = function(obj, key, callback) {
     var db = this;
     db.get(key, function (error, existing) {
@@ -83,7 +76,7 @@ function findAll(db, callback) {
   var database;
 
   if (typeof db === "string" || db instanceof String) {
-    database = this.databaseList[database]
+    database = this.databaseList[db];
   } else {
     database = this.defaultDatabase;
   }
@@ -118,7 +111,7 @@ function findByType(db, docType, callback) {
   var database;
 
   if (typeof db === "string" || db instanceof String) {
-    database = this.databaseList[database]
+    database = this.databaseList[db];
   } else {
     database = this.defaultDatabase;
   }
@@ -149,7 +142,7 @@ function save(db, tweet) {
   var database;
 
   if (typeof db === "string" || db instanceof String) {
-    database = this.databaseList[database]
+    database = this.databaseList[db];
   } else {
     database = this.defaultDatabase;
   }

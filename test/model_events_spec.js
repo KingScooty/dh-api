@@ -52,12 +52,25 @@ describe('Mock Couch', () => {
     }
 */
 
+
     nano.db.create('dh_halloween15_test', function(err, response) {
 
       if (err) return console.log(err);
       expect(response).to.be.ok;
 
       var db = nano.use('dh_halloween15_test');
+      db.insert(tweetMock0, tweetMock0.id_str, function(err, response) {
+        if (err) return console.log(err);
+          expect(response).to.be.ok;
+      });
+    });
+
+    nano.db.create('dh_2016_test', function(err, response) {
+
+      if (err) return console.log(err);
+      expect(response).to.be.ok;
+
+      var db = nano.use('dh_2016_test');
       db.insert(tweetMock0, tweetMock0.id_str, function(err, response) {
         if (err) return console.log(err);
           expect(response).to.be.ok;
@@ -157,6 +170,7 @@ describe('Event', () => {
         dh_2012: nano.use('digitalheroes-2012'),
         dh_2013: nano.use('digitalheroes-2013'),
         dh_2014: nano.use('digitalheroes-2014'),
+        dh_2016: nano.use('dh_2016_test'),
         dh_halloween15: nano.use('dh_halloween15_test')
       }
     };
@@ -177,7 +191,7 @@ describe('Event', () => {
     var newEventModel = new Event();
 
     expect(newEventModel.databaseList).to.be.an.instanceOf(Object)
-      .and.have.all.keys('dh_2012', 'dh_2013', 'dh_2014', 'dh_halloween15');
+      .and.have.all.keys('dh_2012', 'dh_2013', 'dh_2014', 'dh_2016', 'dh_halloween15');
   });
 
   it('should set an internal default database', () => {
@@ -194,11 +208,24 @@ describe('Event', () => {
 
 
   describe('syncDesignDoc()', () => {
-    it('should save the latest design doc to database', (done) => {
+    it('should save the latest design doc to the default database', (done) => {
       var newEventModel = new Event();
-      newEventModel.syncDesignDoc(0, function(err, response) {
+
+      newEventModel.syncDesignDoc(null, function(err, response) {
         if (err) return console.log(err);
         expect(response).to.be.ok;
+        expect(response.id).to.equal('_design/tweets');
+        done();
+      });
+    });
+
+    it('should save the latest design doc to a specified database', (done) => {
+      var newEventModel = new Event();
+
+      newEventModel.syncDesignDoc('dh_2016', function(err, response) {
+        if (err) return console.log(err);
+        expect(response).to.be.ok;
+        expect(response.id).to.equal('_design/tweets');
         done();
       });
     });
@@ -246,6 +273,7 @@ describe('Event', () => {
 
   after(function() {
     nano.db.destroy('dh_halloween15_test');
+    nano.db.destroy('dh_2016_test');
   });
 
 });
