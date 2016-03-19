@@ -49,12 +49,24 @@ function syncDesignDoc(db, callback) {
     }
   };
 
-  database.insert(design, '_design/tweets', function(err, response) {
-    if (err) {
-      callback(err);
-    } else {
-      callback(response);
-    }
+  // database.insert(design, '_design/tweets', function(err, response) {
+  //   if (err) {
+  //     callback(err);
+  //   } else {
+  //     callback(response);
+  //   }
+  // });
+  database.update = function(obj, key, callback) {
+    var db = this;
+    db.get(key, function (error, existing) {
+      if(!error) obj._rev = existing._rev;
+      db.insert(obj, key, callback);
+    });
+  }
+
+  database.update(design, '_design/tweets', function(err, res) {
+    if (err) return callback(err);
+    callback(null, res);
   });
 };
 
