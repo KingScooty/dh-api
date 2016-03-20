@@ -11,7 +11,7 @@ var EventModel = function EventModel() {
 /**
  * Saves the latest design document to database
  *
- * @param {String} db - 'dh2015' / 'dh_halloween15'
+ * @param {String} db - database key
  * @param {Function} callback
  */
 
@@ -64,7 +64,7 @@ function syncDesignDoc(db, callback) {
 /**
  * Returns all the documents from a database
  *
- * @param {String} db - 'dh2015' / 'dh_halloween15'
+ * @param {String} db - database key
  * @param {Function} callback
  */
 
@@ -94,6 +94,7 @@ function findAll(db, callback) {
 /**
  * Returns all the documents by type from a database
  *
+ * @param {String} db - database key
  * @param {String} docType - 'event_info' / 'all_tweets'
  * @param {Function} callback
  */
@@ -125,12 +126,13 @@ function findByType(db, docType, callback) {
 /**
  * Saves a document (tweet) to the database
  *
- * @param {String} docType - 'event_info' / 'all_tweets'
+ * @param {String} db - database key
+ * @param {Object} tweet - tweet doc json object
  * @param {Function} callback
  */
 
 EventModel.prototype.save =
-function save(db, tweet) {
+function save(db, tweet, callback) {
 
   var database;
 
