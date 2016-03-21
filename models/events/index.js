@@ -58,11 +58,10 @@ function syncDesignDoc(db, callback) {
  * Returns all the documents from a database
  *
  * @param {String} db - database key
- * @param {Function} callback
  */
 
 EventModel.prototype.findAll =
-function findAll(db, callback) {
+function findAll(db) {
 
   var database;
 
@@ -92,11 +91,10 @@ function findAll(db, callback) {
  *
  * @param {String} db - database key
  * @param {String} docType - 'event_info' / 'all_tweets'
- * @param {Function} callback
  */
 
 EventModel.prototype.findByType =
-function findByType(db, docType, callback) {
+function findByType(db, docType) {
 
   var database;
 
