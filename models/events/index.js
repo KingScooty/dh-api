@@ -106,17 +106,19 @@ function findByType(db, docType, callback) {
     database = this.defaultDatabase;
   }
 
-  database.view('tweets', docType, function(err, body) {
-    if (err) {
-      callback(error)
-    } else {
+  return new Promise(function(fullfill, reject) {
+    database.view('tweets', docType, function(err, body) {
       var docs = [];
+      if (err) return reject(error);
+
       body.rows.forEach(function (row) {
         docs.push(row);
       });
-      callback(null, docs);
-    }
+
+      fullfill(docs);
+    });
   });
+
 };
 
 /**

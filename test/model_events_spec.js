@@ -258,12 +258,15 @@ describe('Event', () => {
 
       var newEventModel = new Event();
 
-      newEventModel.findByType(null, 'event_info', function(err, response) {
-        if (err) return console.log(err);
+      newEventModel.findByType(null, 'event_info')
+      .then(function(response) {
         expect(response).to.be.ok;
         expect(response).to.have.length(1);
         expect(response[0].id).to.equal(eventMock0._id);
         done();
+      })
+      .catch(function(err) {
+        console.log(err);
       });
 
     });
@@ -272,26 +275,33 @@ describe('Event', () => {
 
       var newEventModel = new Event();
 
-      newEventModel.findByType(null, 'all_tweets', function(err, response) {
-        if (err) return console.log(err);
+      newEventModel.findByType(null, 'all_tweets')
+      .then(function(response) {
         expect(response).to.be.ok;
         expect(response).to.have.length(2);
         expect(response[0].value.id_str).to.equal(tweetMock0.id_str);
         expect(response[1].value.id_str).to.equal(tweetMock1.id_str);
         done();
+      })
+      .catch(function(err) {
+        console.log(err);
       });
+
     });
 
     it('should return all documents by event type only from specified database', (done) => {
 
       var newEventModel = new Event();
 
-      newEventModel.findByType('dh_2016', 'event_info', function(err, response) {
-        if (err) return console.log(err);
+      newEventModel.findByType('dh_2016', 'event_info')
+      .then(function(response) {
         expect(response).to.be.ok;
         expect(response).to.have.length(1);
         expect(response[0].id).to.equal(eventMock1._id);
         done();
+      })
+      .catch(function(err) {
+        console.log(err);
       });
 
     });
@@ -300,12 +310,15 @@ describe('Event', () => {
 
       var newEventModel = new Event();
 
-      newEventModel.findByType('dh_2016', 'all_tweets', function(err, response) {
-        if (err) return console.log(err);
+      newEventModel.findByType('dh_2016', 'all_tweets')
+      .then(function(response) {
         expect(response).to.be.ok;
         expect(response).to.have.length(1);
         expect(response[0].value.id_str).to.equal(tweetMock0.id_str);
         done();
+      })
+      .catch(function(err) {
+        console.log(err);
       });
 
     });
