@@ -1,6 +1,7 @@
 var db = require('../../db');
 
 var lastInObject = require('../../helpers/last_in_object');
+var updateDoc = require('../../helpers/couchdb/update_doc');
 
 var EventModel = function EventModel() {
   this.connection = db.connection;
@@ -47,15 +48,7 @@ function syncDesignDoc(db, callback) {
     }
   };
 
-  database.update = function(obj, key, callback) {
-    var db = this;
-    db.get(key, function (error, existing) {
-      if(!error) obj._rev = existing._rev;
-      db.insert(obj, key, callback);
-    });
-  }
-
-  database.update(design, '_design/tweets', function(err, res) {
+  updateDoc(design, '_design/tweets', database, function(err, res) {
     if (err) return callback(err);
     callback(null, res);
   });
