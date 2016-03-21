@@ -29,16 +29,23 @@ router.get('/:year', co(function *(ctx, next) {
   ctx.body = yield eventModel.findAll(year);
 }));
 
+/**
+ * GET event info by :year/info.
+ */
 
-router.get('/:year/info', (ctx, next) => {
-  ctx.body = {
-    body: `INFO for the year: ${ctx.params.year}`
-  };
-});
+router.get('/:year/info', co(function *(ctx, next) {
+  var year = `dh_${ctx.params.year}`;
+  ctx.body = yield eventModel.findByType(year, 'event_info');
+}));
 
-router.get('/:year/tweets', (ctx, next) => {
-  ctx.body = `TWEETS for the year: ${ctx.params.year}`;
-});
+/**
+ * GET tweets by :year/tweets.
+ */
+
+router.get('/:year/tweets', co(function *(ctx, next) {
+  var year = `dh_${ctx.params.year}`;
+  ctx.body = yield eventModel.findByType(year, 'all_tweets');
+}));
 
 
 

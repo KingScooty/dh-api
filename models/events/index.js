@@ -107,7 +107,7 @@ function findByType(db, docType) {
   return new Promise(function(fullfill, reject) {
     database.view('tweets', docType, function(err, body) {
       var docs = [];
-      if (err) return reject(error);
+      if (err) return reject(err);
 
       body.rows.forEach(function (row) {
         docs.push(row);
