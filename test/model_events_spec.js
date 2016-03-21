@@ -218,14 +218,16 @@ describe('Event', () => {
 
       var newEventModel = new Event();
 
-      newEventModel.findAll(null, function(err, response) {
-        if (err) return console.log(err);
+      newEventModel.findAll()
+      .then(function(response) {
         expect(response).to.be.ok;
         expect(response).to.have.length(3);
         expect(response[0].value.id_str).to.equal(tweetMock0.id_str);
         expect(response[1].value.id_str).to.equal(tweetMock1.id_str);
         expect(response[2].id).to.equal(eventMock0._id);
         done();
+      }).catch(function(err) {
+        console.log(err);
       });
 
     });
@@ -234,14 +236,18 @@ describe('Event', () => {
 
       var newEventModel = new Event();
 
-      newEventModel.findAll('dh_2016', function(err, response) {
-        if (err) return console.log(err);
+      newEventModel.findAll('dh_2016')
+      .then(function(response) {
         expect(response).to.be.ok;
         expect(response).to.have.length(2);
         expect(response[0].value.id_str).to.equal(tweetMock0.id_str);
         expect(response[1].id).to.equal(eventMock1._id);
         done();
+      })
+      .catch(function(err) {
+        console.log(err);
       });
+
 
     });
   });

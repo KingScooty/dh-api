@@ -72,14 +72,17 @@ function findAll(db, callback) {
     database = this.defaultDatabase;
   }
 
-  database.view('tweets', 'all', function(err, body) {
-    if (err) return callback(err);
+  return new Promise(function(fullfill, reject) {
+    database.view('tweets', 'all', function(err, body) {
+      var docs = [];
+      if (err) return reject(err);
 
-    var docs = [];
-    body.rows.forEach(function (row) {
-      docs.push(row);
+      body.rows.forEach(function (row) {
+        docs.push(row);
+      });
+
+      fullfill(docs);
     });
-    callback(null, docs);
   });
 
 };

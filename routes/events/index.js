@@ -1,4 +1,10 @@
 const router = require('koa-router')();
+const Promise = require('bluebird');
+const co = Promise.coroutine;
+
+const Event = require('../../models/events');
+
+const eventModel = new Event();
 
 const api = 'api/events';
 router.prefix(`/${api}`);
@@ -18,11 +24,10 @@ router.get('/', (ctx, next) => {
  * GET year by :year.
  */
 
-router.get('/:year', (ctx, next) => {
-  ctx.body = {
-    body: `Listing the following year: ${ctx.params.year}`
-  };
-});
+router.get('/:year', co(function *(ctx, next) {
+  var year = `dh_${ctx.params.year}`;
+  ctx.body = yield eventModel.findAll(year);
+}));
 
 
 router.get('/:year/info', (ctx, next) => {
