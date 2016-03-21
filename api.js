@@ -14,8 +14,8 @@ const config = require('./config/');
 const errorMiddleware = require('./middleware/errors');
 api.use(errorMiddleware());
 
-const router = require('./routes/');
-router(api);
+const router = require('./routes/')(api);
+// router(api);
 
 api.use(logger);
 
