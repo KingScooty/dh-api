@@ -1,7 +1,6 @@
 var chai = require('chai');
 var expect = chai.expect;
 
-var sinon = require('sinon');
 var proxyquire = require('proxyquire');
 
 var Event = require('../models/events');

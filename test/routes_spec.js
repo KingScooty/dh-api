@@ -1,6 +1,8 @@
 /*eslint-disable */
 var api = require('../api');
 var supertest = require('supertest');
+var Promise = require('bluebird');
+var sinon = require('sinon');
 var chai = require('chai');
 
 var expect = chai.expect;
@@ -9,12 +11,22 @@ chai.should();
 const request = supertest.agent(api.listen());
 const context = {};
 
-// console.log(request);
+const Event = require('../models/events');
+// const eventController = require('../routes/events');
+// var stub;
 
 describe('API', () => {
-  // before((done) => {
-  //   done();
-  // });
+
+  before(() => {
+
+    var docs = new Promise(function(fullfill, reject) {
+      fullfill({});
+    });
+
+    sinon.stub(Event.prototype, "findAll").returns(docs);
+    sinon.stub(Event.prototype, "findByType").returns(docs);
+  });
+
   it('should throw json 404 if route does not exist', (done) => {
     request
       .get('/api/fail/1')
@@ -25,7 +37,7 @@ describe('API', () => {
 
   describe('GET /api/events', () => {
     describe('/:year', () => {
-      it('should should fetch year', (done) => {
+      it('should fetch year', (done) => {
         request
           .get('/api/events/2015')
           .set('Accept', 'application/json')
