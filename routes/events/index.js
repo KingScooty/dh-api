@@ -2,6 +2,7 @@ const router = require('koa-router')();
 const Promise = require('bluebird');
 const co = Promise.coroutine;
 
+const databaseList = require('../../db').databaseList;
 const Event = require('../../models/events');
 
 const eventModel = new Event();
@@ -25,8 +26,10 @@ router.get('/', (ctx, next) => {
  */
 
 router.get('/:year', co(function *(ctx, next) {
-  var year = `dh_${ctx.params.year}`;
-  ctx.body = yield eventModel.findAll(year);
+  const year_query = `dh_${ctx.params.year}`;
+  if (!databaseList.hasOwnProperty(year_query)) return ctx.throw(404);
+
+  ctx.body = yield eventModel.findAll(year_query)
 }));
 
 /**

@@ -248,8 +248,26 @@ describe('Event', () => {
         console.log(err);
       });
 
-
     });
+
+    // it('should gracefully fail if database does not exist', (done) => {
+    //
+    //   var newEventModel = new Event();
+    //
+    //   newEventModel.findAll('fail')
+    //   .then(function(response) {
+    //     expect(response).to.be.ok;
+    //     expect(response).to.have.length(2);
+    //     expect(response[0].value.id_str).to.equal(tweetMock0.id_str);
+    //     expect(response[1].id).to.equal(eventMock1._id);
+    //     done();
+    //   })
+    //   .catch(function(err) {
+    //     console.log(err);
+    //   });
+    //
+    // });
+
   });
 
   describe('findByType()', () => {
