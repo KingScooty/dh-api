@@ -12,8 +12,6 @@ const request = supertest.agent(api.listen());
 const context = {};
 
 const Event = require('../models/events');
-// const eventController = require('../routes/events');
-// var stub;
 
 describe('API', () => {
 
