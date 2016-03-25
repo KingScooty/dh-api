@@ -10,7 +10,7 @@ module.exports = function errorMiddleware() {
 
     try {
       yield next();
-      if (ctx.response.status && !ctx.response.body === 404) ctx.throw(404);
+      if (ctx.response.status /*&& !ctx.response.body*/ === 404) ctx.throw(404);
     } catch (err) {
 
       // some errors will have .status
