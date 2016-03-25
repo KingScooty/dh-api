@@ -1,5 +1,6 @@
 const config = require('../../config/');
 const host =  config.database.host;
+const Promise = require('bluebird');
 
 var nano = require('nano')(`http://${host}`);
 
@@ -18,18 +19,25 @@ var nano = require('nano')(`http://${host}`);
 
 function insert_doc(doc, db_name, tried) {
   var db = nano.use(db_name);
-  db.insert(doc,
-    function (error,http_body,http_headers) {
-      if(error) {
-        if(error.message === 'no_db_file'  && tried < 1) {
-          // create database and retry
-          return nano.db.create(db_name, function () {
-            insert_doc(doc, tried + 1);
-          });
+
+  return new Promise(function(fullfill, reject) {
+
+    db.insert(doc,
+      function (error,http_body,http_headers) {
+        if(error) {
+          if(error.message === 'no_db_file'  && tried < 1) {
+            // create database and retry
+            return nano.db.create(db_name, function () {
+              insert_doc(doc, db_name, tried + 1);
+              fullfill(http_body);
+            });
+          }
+          else { return reject(error) }
         }
-        else { return console.log(error); }
-      }
-      console.log(http_body);
+        // console.log(http_body);
+        fullfill(http_body);
+    });
+
   });
 }
 
