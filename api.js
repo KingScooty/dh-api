@@ -15,7 +15,7 @@ api.use(Compress({
     flush: require('zlib').Z_SYNC_FLUSH
 }));
 
-const config = require('./config/');
+// const config = require('./config/');
 const errorMiddleware = require('./middleware/errors');
 api.use(errorMiddleware());
 
