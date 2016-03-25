@@ -16,20 +16,51 @@ describe('API', () => {
   //   done();
   // });
 
-  describe('GET /api/events/:year', () => {
+  describe('GET /api/events', () => {
+    describe('/:year', () => {
+      it('should should fetch year', (done) => {
+        request
+          .get('/api/events/2015')
+          .set('Accept', 'application/json')
+          .expect(200, done);
+      });
 
-    it('should should fetch year', (done) => {
-      request
-        .get('/api/events/2015')
-        .set('Accept', 'application/json')
-        .expect(200, done);
+      it('should throw 404 if year doesn\'t exist', (done) => {
+        request
+          .get('/api/events/1')
+          .set('Accept', 'application/json')
+          .expect(404, done);
+      });
     });
+    describe('/:year/info', () => {
+      it('should should fetch info', (done) => {
+        request
+          .get('/api/events/2015/info')
+          .set('Accept', 'application/json')
+          .expect(200, done);
+      });
 
-    it('should throw 404 if year doesn\'t exist', (done) => {
-      request
-        .get('/api/events/1')
-        .set('Accept', 'application/json')
-        .expect(404, done);
+      it('should throw 404 if info doesn\'t exist', (done) => {
+        request
+          .get('/api/events/1/info')
+          .set('Accept', 'application/json')
+          .expect(404, done);
+      });
+    });
+    describe('/:year/tweets', () => {
+      it('should should fetch tweets', (done) => {
+        request
+          .get('/api/events/2015/tweets')
+          .set('Accept', 'application/json')
+          .expect(200, done);
+      });
+
+      it('should throw 404 if tweets don\'t exist', (done) => {
+        request
+          .get('/api/events/1/tweets')
+          .set('Accept', 'application/json')
+          .expect(404, done);
+      });
     });
   });
 

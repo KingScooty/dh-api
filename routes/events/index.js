@@ -37,8 +37,9 @@ router.get('/:year', co(function *(ctx, next) {
  */
 
 router.get('/:year/info', co(function *(ctx, next) {
-  var year = `dh_${ctx.params.year}`;
-  ctx.body = yield eventModel.findByType(year, 'event_info');
+  var year_query = `dh_${ctx.params.year}`;
+  if (!databaseList.hasOwnProperty(year_query)) return ctx.throw(404);
+  ctx.body = yield eventModel.findByType(year_query, 'event_info');
 }));
 
 /**
@@ -46,8 +47,9 @@ router.get('/:year/info', co(function *(ctx, next) {
  */
 
 router.get('/:year/tweets', co(function *(ctx, next) {
-  var year = `dh_${ctx.params.year}`;
-  ctx.body = yield eventModel.findByType(year, 'all_tweets');
+  var year_query = `dh_${ctx.params.year}`;
+  if (!databaseList.hasOwnProperty(year_query)) return ctx.throw(404);
+  ctx.body = yield eventModel.findByType(year_query, 'all_tweets');
 }));
 
 
