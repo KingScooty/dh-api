@@ -23,8 +23,8 @@ module.exports = function errorMiddleware() {
 
       ctx.type = 'application/json';
       if (env === 'development') ctx.body = { error: err.message }
-      else if (err.expose) this.body = { error: err.message }
-      else this.body = { error: http.STATUS_CODES[ctx.status]}
+      else if (err.expose) ctx.body = { error: err.message }
+      else ctx.body = { error: http.STATUS_CODES[ctx.status]}
 
       // ctx.body = JSON.stringify({
       //   success: false,

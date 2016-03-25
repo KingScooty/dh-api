@@ -71,7 +71,7 @@ describe('API', () => {
       });
     });
     describe('/:year/tweets', () => {
-      it('should should fetch tweets', (done) => {
+      it('should fetch tweets', (done) => {
         request
           .get('/api/events/2015/tweets')
           .set('Accept', 'application/json')
