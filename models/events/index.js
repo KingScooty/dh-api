@@ -3,6 +3,13 @@ var db = require('../../db');
 var lastInObject = require('../../helpers/last_in_object');
 var updateDoc = require('../../helpers/couchdb/update_doc');
 
+/*
+ Abstract a basic 'Model', that handles all generic couchdb communication.
+ EventModel = new Model.
+
+ Then prototype or assign specific functions to EventModel????
+ */
+
 var EventModel = function EventModel() {
   this.connection = db.connection;
   this.databaseList = db.databaseList;
