@@ -17,7 +17,7 @@ var nano = require('nano')(`http://${host}`);
  */
 
 
-function insert_doc(doc, db_name, tried) {
+const insert_doc = function insert_doc(doc, db_name, tried) {
   var db = nano.use(db_name);
 
   return new Promise(function(fullfill, reject) {
