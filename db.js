@@ -2,6 +2,7 @@ const config = require('./config/');
 const host =  config.database.host;
 
 var nano = require('nano')(`http://${host}`);
+var lastInObject = require('./helpers/last_in_object');
 
 /*
   http://couchdb-3c369e79-1.kingscooty.cont.tutum.io:5984/_all_dbs
@@ -23,7 +24,30 @@ var databaseList = {
   dh_2014: nano.use('digitalheroes-2014'),
   dh_2015: nano.use('digitalheroes-2015'),
   dh_halloween15: nano.use('digitalheroes-halloween-2015')
+}
+
+var database = {
+  list: databaseList,
+
+  /**
+   * Returns a database connection based on year
+   * @param {Integer} year
+   */
+
+  year: function(year) {
+    return this.list[`dh_${year}`];
+  },
+
+  /**
+   * Returns the latest database
+   */
+
+  latest: function() {
+    return lastInObject(this.list);
+  }
+
 };
 
 module.exports.connection = nano;
 module.exports.databaseList = databaseList;
+module.exports.database = database;
