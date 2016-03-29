@@ -6,7 +6,7 @@ chai.should();
 var db = require('../db').database;
 var lastInObject = require('../helpers/last_in_object');
 
-describe('Database', () => {
+describe('Database config method', () => {
   describe('latest()', () => {
     it('should return the latest database', () => {
       var dbList = require('../db').databaseList;
