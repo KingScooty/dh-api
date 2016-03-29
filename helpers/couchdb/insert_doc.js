@@ -13,7 +13,6 @@ var nano = require('nano')(`http://${host}`);
  * @param {Object} doc - document
  * @param {String} db_name - database key
  * @param {Integer} tried
- * @param {Function} callback
  */
 
 
