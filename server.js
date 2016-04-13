@@ -18,7 +18,8 @@ const getServer = () => {
   }, api.callback());
 
   const io = socketIo.listen(server);
-  const eventSockets = require('./sockets')(io);
+  const dbFeed = require('./feed');
+  const eventSockets = require('./sockets')(io, dbFeed);
 
   return server;
 };

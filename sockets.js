@@ -1,14 +1,4 @@
-var db = require('./db').database.latest();
-console.log(db);
-
-exports = module.exports = function (io) {
-
-  var feed = db.follow({
-    since: "now",
-    include_docs: true
-  });
-
-  feed.follow();
+exports = module.exports = function initSockets (io, feed) {
 
   feed.on('change', function(change) {
     var doc = change.doc;
@@ -17,8 +7,8 @@ exports = module.exports = function (io) {
   });
 
   io.on('connection', () => {
-    console.log(`New user connected at ${(new Date).toISOString()}`);
-
+    // console.log(`SERVER: New user connected at ${(new Date).toISOString()}`);
+    io.sockets.emit('greeting', `CLIENT: Connected at ${(new Date).toISOString()}`);
     /*
      * Handle couchdb changes and report update to user.
      * Use the nano updates method.
