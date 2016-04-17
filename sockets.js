@@ -1,4 +1,15 @@
-exports = module.exports = function initSockets (io, feed) {
+const Promise = require('bluebird');
+const co = Promise.coroutine;
+
+const Event = require('./models/events');
+const eventModel = new Event();
+
+//sockets needs to:
+// greet client on first connect
+//emit an db content on first connect
+//emit db change when feed follow detects a change
+
+module.exports.newTweets = function newTweets (io, feed) {
 
   feed.on('change', function(change) {
     var doc = change.doc;
@@ -6,18 +17,27 @@ exports = module.exports = function initSockets (io, feed) {
     io.sockets.emit('incomingTweet', doc);
   });
 
+};
+
+module.exports.greeting = function greeting (io) {
   io.on('connection', () => {
     // console.log(`SERVER: New user connected at ${(new Date).toISOString()}`);
     io.sockets.emit('greeting', `CLIENT: Connected at ${(new Date).toISOString()}`);
-    /*
-     * Handle couchdb changes and report update to user.
-     * Use the nano updates method.
-     * https://github.com/dscape/nano#nanoupdatesparams-callback
-     *
-     * Change params.feed to continuous or eventsource.
-     * Idea is that couch will report when a new tweet is saved, and push it to
-     * to the end user over this socket.
-     */
   });
+};
 
-}
+module.exports.existingTweets = function existingTweets (io) {
+  io.on('connection', () => {
+
+    var tweets = co(function* () {
+      return yield eventModel.findByType('dh_halloween15', 'all_tweets');
+    });
+
+    tweets().then(function(result) {
+      console.log('ello?');
+      // console.log(result);
+      // io.sockets.emit('incomingTweet', result);
+    });
+
+  });
+};
