@@ -341,13 +341,19 @@ describe('Event', () => {
     });
   });
 
-  describe('saveDoc()', () => {
-    it('', () => {});
-  });
 
-  after(function() {
-    nano.db.destroy('dh_halloween15_test');
-    nano.db.destroy('dh_2016_test');
+  // after(function() {
+  //   nano.db.destroy('dh_halloween15_test');
+  //   nano.db.destroy('dh_2016_test');
+  // });
+  after((done) => {
+    nano.db.destroy('dh_halloween15_test', function(err, res) {
+      if (err) return console.log(err);
+      nano.db.destroy('dh_2016_test', function(err, res) {
+        if (err) return console.log(err);
+          done();
+      });
+    });
   });
 
 });
