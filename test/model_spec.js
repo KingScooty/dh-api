@@ -62,19 +62,36 @@ describe('Mock data', () => {
     // TweetMock1 saved to dh_halloween15_test.
 
     dbHelpers.createDB(dbName1)
-    .then(dbHelpers.insertTweet(db1, 0))
-    .then(dbHelpers.insertEvent(db1, 1))
-    .then(dbHelpers.updateDesignDoc(db1, 'tweets', designDoc))
+    .then(function() {
+      return dbHelpers.insertTweet(db1, 0);
+    })
+    .then(function() {
+      return dbHelpers.insertEvent(db1, 1);
+    })
+    .then(function() {
+      return dbHelpers.updateDesignDoc(db1, 'tweets', designDoc);
+    })
 
-    .then(dbHelpers.createDB(dbName2))
-    .then(dbHelpers.insertTweet(db2, 0))
-    .then(dbHelpers.insertTweet(db2, 1))
-    .then(dbHelpers.insertEvent(db2, 0))
-    .then(dbHelpers.updateDesignDoc(db2, 'tweets', designDoc))
+    .then(function() {
+      return dbHelpers.createDB(dbName2);
+    })
+    .then(function() {
+      return dbHelpers.insertTweet(db2, 0);
+    })
+    .then(function() {
+      return dbHelpers.insertTweet(db2, 1)
+    })
+    .then(function() {
+      return dbHelpers.insertEvent(db2, 0)
+    })
+    .then(function() {
+      return dbHelpers.updateDesignDoc(db2, 'tweets', designDoc)
+    })
 
 
 
     .then(function() {
+      console.log('When is this being called?');
       done();
     })
     .catch(function(err) {
