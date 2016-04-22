@@ -47,20 +47,6 @@ describe('Mock data', () => {
 
     this.timeout(5000);
 
-    // EventMock0 saved to dh_halloween15_test.
-    // Hello??
-    // TweetMock1 saved to dh_halloween15_test.
-    // EventMock1 saved to dh_2016_test.
-    // TweetMock0 saved to dh_2016_test.
-    // TweetMock0 saved to dh_halloween15_test.
-
-    // EventMock1 saved to dh_2016_test.
-    // TweetMock0 saved to dh_2016_test.
-    // Hello??
-    // EventMock0 saved to dh_halloween15_test.
-    // TweetMock0 saved to dh_halloween15_test.
-    // TweetMock1 saved to dh_halloween15_test.
-
     dbHelpers.createDB(dbName1)
     .then(function() {
       return dbHelpers.insertTweet(db1, 0);
@@ -88,10 +74,7 @@ describe('Mock data', () => {
       return dbHelpers.updateDesignDoc(db2, 'tweets', designDoc)
     })
 
-
-
     .then(function() {
-      console.log('When is this being called?');
       done();
     })
     .catch(function(err) {
@@ -102,7 +85,7 @@ describe('Mock data', () => {
 
   it('should contain a design document', (done) => {
     var db = nano.db.use(dbName2);
-    console.log('Hello??');
+
     db.view('tweets', 'all', function(err, body) {
       if (err) return err;
 

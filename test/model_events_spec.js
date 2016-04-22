@@ -11,78 +11,23 @@ var tweetMock1 = require('./mocks/tweet1.json');
 var eventMock0 = require('./mocks/event_info0.json');
 var eventMock1 = require('./mocks/event_info1.json');
 
-var couchdb;
+var dbHelpers = require('./helpers/couchdb');
+
+// var couchdb;
 var nano = require('nano')('http://localhost:5984');
+
+var dbName1 = 'dh_2016_test';
+var dbName2 = 'dh_halloween15_test';
 
 chai.should();
 
-describe('Mock Couch', () => {
+describe('Mock data', () => {
 
   before(function(done) {
+    var db1 = nano.use(dbName1);
+    var db2 = nano.use(dbName2);
 
-    nano.db.create('dh_halloween15_test', function(err, response) {
-
-      if (err) return console.log(err);
-      expect(response).to.be.ok;
-
-      var db = nano.use('dh_halloween15_test');
-      db.insert(tweetMock0, tweetMock0.id_str, function(err, response) {
-        if (err) return console.log(err);
-          expect(response).to.be.ok;
-      });
-
-      db.insert(eventMock0, function(err, response) {
-        if (err) return console.log(err);
-        expect(response).to.be.ok;
-      });
-    });
-
-    nano.db.create('dh_2016_test', function(err, response) {
-
-      if (err) return console.log(err);
-      expect(response).to.be.ok;
-
-      var db = nano.use('dh_2016_test');
-      db.insert(tweetMock0, tweetMock0.id_str, function(err, response) {
-        if (err) return console.log(err);
-        expect(response).to.be.ok;
-      });
-
-      db.insert(eventMock1, function(err, response) {
-        if (err) return console.log(err);
-        expect(response).to.be.ok;
-        done();
-      });
-    });
-
-  });
-
-  it('should be able to save new documents', (done) => {
-
-    var db = nano.db.use('dh_halloween15_test');
-    db.insert(tweetMock1, tweetMock1.id_str, function callback(err, res) {
-      if (err) {
-        console.log(err);
-      } else {
-        expect(res).to.be.ok;
-        (res.id).should.equal(tweetMock1.id_str);
-        done()
-      }
-    });
-  });
-
-  it('should contain documents', (done) => {
-    var db = nano.db.use('dh_halloween15_test');
-    db.get('654788497228742656', function(err, body) {
-      if (!err)
-        done();
-    });
-  });
-
-  it('should be able to update the design document', (done) => {
-    var db = nano.db.use('dh_halloween15_test');
-
-    var design = {
+    var designDoc = {
       "views": {
         "all": {
           map: function(doc) {
@@ -102,36 +47,60 @@ describe('Mock Couch', () => {
       }
     };
 
-    db.update = function(obj, key, callback) {
-      var db = this;
-      db.get(key, function (error, existing) {
-        if(!error) obj._rev = existing._rev;
-        db.insert(obj, key, callback);
-      });
-    }
+    this.timeout(5000);
 
-    db.update(design, '_design/tweets', function(err, res) {
-      if (err) return console.log(err);
-      expect(res).to.be.ok;
+    dbHelpers.createDB(dbName1)
+    .then(function() {
+      return dbHelpers.insertTweet(db1, 0);
+    })
+    .then(function() {
+      return dbHelpers.insertEvent(db1, 1);
+    })
+    .then(function() {
+      return dbHelpers.updateDesignDoc(db1, 'tweets', designDoc);
+    })
+
+    .then(function() {
+      return dbHelpers.createDB(dbName2);
+    })
+    .then(function() {
+      return dbHelpers.insertTweet(db2, 0);
+    })
+    .then(function() {
+      return dbHelpers.insertTweet(db2, 1)
+    })
+    .then(function() {
+      return dbHelpers.insertEvent(db2, 0)
+    })
+    .then(function() {
+      return dbHelpers.updateDesignDoc(db2, 'tweets', designDoc)
+    })
+
+    .then(function() {
       done();
+    })
+    .catch(function(err) {
+      console.log(err);
     });
 
   });
 
   it('should contain a design document', (done) => {
-    var db = nano.db.use('dh_halloween15_test');
+    var db = nano.db.use(dbName2);
+
     db.view('tweets', 'all', function(err, body) {
-      if (!err) {
-        var docs = [];
-        body.rows.forEach(function(doc) {
-          docs.push(doc);
-        });
-        (docs[0].value.id).should.equal(tweetMock0.id);
-        done();
-      }
+      if (err) return err;
+
+      var docs = [];
+      body.rows.forEach(function(doc) {
+        docs.push(doc);
+      });
+      console.log(docs[0].value.id);
+      console.log(tweetMock0.id);
+      (docs[0].value.id).should.equal(tweetMock0.id);
+      done();
     });
   });
-
 
 });
 
