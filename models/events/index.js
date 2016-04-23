@@ -4,21 +4,6 @@ var lastInObject = require('../../helpers/last_in_object');
 var updateDoc = require('../../helpers/couchdb/update_doc');
 var Model = require('../model');
 
-/*
- Abstract a basic 'Model', that handles all generic couchdb communication.
- EventModel = new Model.
-
- Then prototype or assign specific functions to EventModel????
- */
-
-// var EventModel = function EventModel() {
-//   this.connection = db.connection;
-//   this.databaseList = db.databaseList;
-//   this.defaultDatabase = lastInObject(db.databaseList);
-// };
-
-// var EventModel = function EventModel() {};
-// EventModel.prototype = new Model(db);
 var eventModel = new Model(db);
 
 /**
@@ -66,70 +51,6 @@ function syncDesignDoc(db, callback) {
   });
 };
 
-/**
- * Returns all the documents from a database
- *
- * @param {String} db - database key
- */
-
-// EventModel.prototype.findAll =
-// function findAll(db) {
-//
-//   var database;
-//
-//   if (typeof db === "string" || db instanceof String) {
-//     database = this.databaseList[db];
-//   } else {
-//     database = this.defaultDatabase;
-//   }
-//
-//   return new Promise(function(fullfill, reject) {
-//     database.view('tweets', 'all', function(err, body) {
-//       var docs = [];
-//       if (err) return reject(err);
-//
-//       body.rows.forEach(function (row) {
-//         docs.push(row);
-//       });
-//
-//       fullfill(docs);
-//     });
-//   });
-//
-// };
-
-/**
- * Returns all the documents by type from a database
- *
- * @param {String} db - database key
- * @param {String} docType - 'event_info' / 'all_tweets'
- */
-
-// EventModel.prototype.findByType =
-// function findByType(db, docType) {
-//
-//   var database;
-//
-//   if (typeof db === "string" || db instanceof String) {
-//     database = this.databaseList[db];
-//   } else {
-//     database = this.defaultDatabase;
-//   }
-//
-//   return new Promise(function(fullfill, reject) {
-//     database.view('tweets', docType, function(err, body) {
-//       var docs = [];
-//       if (err) return reject(err);
-//
-//       body.rows.forEach(function (row) {
-//         docs.push(row);
-//       });
-//
-//       fullfill(docs);
-//     });
-//   });
-//
-// };
 
 /**
  * Saves a document (tweet) to the database

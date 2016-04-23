@@ -150,35 +150,6 @@ describe('Model', () => {
       .to.equal('dh_halloween15_test');
   });
 
-
-  // describe('syncDesignDoc()', () => {
-  //   it('should save the latest design doc to the default database', (done) => {
-  //
-  //     var model = new Model();
-  //
-  //     model.syncDesignDoc(null, function(err, response) {
-  //       if (err) return console.log(err);
-  //       expect(response).to.be.ok;
-  //       expect(response.id).to.equal('_design/tweets');
-  //       done();
-  //     });
-  //
-  //   });
-  //
-  //   it('should save the latest design doc to a specified database', (done) => {
-  //
-  //     var model = new Model();
-  //
-  //     model.syncDesignDoc('dh_2016', function(err, response) {
-  //       if (err) return console.log(err);
-  //       expect(response).to.be.ok;
-  //       expect(response.id).to.equal('_design/tweets');
-  //       done();
-  //     });
-  //
-  //   });
-  // });
-
   describe('listAll()', () => {
     it('returns the all docs from the default database', (done) => {
 
@@ -218,9 +189,9 @@ describe('Model', () => {
 
     // it('should gracefully fail if database does not exist', (done) => {
     //
-    //   var model = new Model();
+    //   var model = new Model(db);
     //
-    //   model.findAll('fail')
+    //   model.listAll('fail')
     //   .then(function(response) {
     //     expect(response).to.be.ok;
     //     expect(response).to.have.length(2);

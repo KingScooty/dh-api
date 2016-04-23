@@ -1,27 +1,13 @@
-// var db = require('../db');
 var lastInObject = require('../helpers/last_in_object');
 var updateDoc = require('../helpers/couchdb/update_doc');
 var Promise = require('bluebird');
 
-/*
- Abstract a basic 'Model', that handles all generic couchdb communication.
- EventModel = new Model.
-
- Then prototype or assign specific functions to EventModel????
- */
 
 var Model = function Model(db) {
   this.connection = db.connection; // maybe point to config instead??
   this.databaseList = db.databaseList;
   this.defaultDatabase = lastInObject(db.databaseList);
 };
-
-// generic model needs to:
-// retrieve all documents from database
-// retrieve document by type from database
-
-// specific model needs to:
-// sync design document to database
 
 
 /**
