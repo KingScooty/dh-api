@@ -1,8 +1,8 @@
 const Promise = require('bluebird');
 const co = Promise.coroutine;
 
-const Event = require('./models/events');
-const eventModel = new Event();
+const eventModel = require('./models/events');
+// const eventModel = new Event();
 
 //sockets needs to:
 // greet client on first connect

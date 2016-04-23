@@ -11,7 +11,7 @@ chai.should();
 const request = supertest.agent(api.listen());
 const context = {};
 
-const Event = require('../models/events');
+const eventModel = require('../models/events');
 
 describe('API', () => {
 
@@ -21,8 +21,8 @@ describe('API', () => {
       fullfill({});
     });
 
-    sinon.stub(Event.prototype, "findAll").returns(docs);
-    sinon.stub(Event.prototype, "findByType").returns(docs);
+    sinon.stub(eventModel, "listAll").returns(docs);
+    sinon.stub(eventModel, "findByType").returns(docs);
   });
 
   it('should throw json 404 if route does not exist', (done) => {

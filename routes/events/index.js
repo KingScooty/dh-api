@@ -3,9 +3,9 @@ const Promise = require('bluebird');
 const co = Promise.coroutine;
 
 const databaseList = require('../../db').databaseList;
-const Event = require('../../models/events');
+const eventModel = require('../../models/events');
 
-const eventModel = new Event();
+// const eventModel = new Event();
 
 const api = 'api/events';
 router.prefix(`/${api}`);
@@ -29,7 +29,7 @@ router.get('/:year', co(function *(ctx, next) {
   const year_query = `dh_${ctx.params.year}`;
   if (!databaseList.hasOwnProperty(year_query)) return ctx.throw(404);
 
-  ctx.body = yield eventModel.findAll(year_query)
+  ctx.body = yield eventModel.listAll(year_query)
 }));
 
 /**
@@ -40,7 +40,7 @@ router.get('/:year/info', co(function *(ctx, next) {
   var year_query = `dh_${ctx.params.year}`;
   if (!databaseList.hasOwnProperty(year_query)) return ctx.throw(404);
 
-  ctx.body = yield eventModel.findByType(year_query, 'event_info');
+  ctx.body = yield eventModel.findByType(year_query, 'tweets', 'event_info');
 }));
 
 /**
@@ -51,7 +51,7 @@ router.get('/:year/tweets', co(function *(ctx, next) {
   var year_query = `dh_${ctx.params.year}`;
   if (!databaseList.hasOwnProperty(year_query)) return ctx.throw(404);
 
-  ctx.body = yield eventModel.findByType(year_query, 'all_tweets');
+  ctx.body = yield eventModel.findByType(year_query, 'tweets', 'all_tweets');
 }));
 
 

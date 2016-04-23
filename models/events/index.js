@@ -2,6 +2,7 @@ var db = require('../../db');
 
 var lastInObject = require('../../helpers/last_in_object');
 var updateDoc = require('../../helpers/couchdb/update_doc');
+var Model = require('../model');
 
 /*
  Abstract a basic 'Model', that handles all generic couchdb communication.
@@ -10,11 +11,15 @@ var updateDoc = require('../../helpers/couchdb/update_doc');
  Then prototype or assign specific functions to EventModel????
  */
 
-var EventModel = function EventModel() {
-  this.connection = db.connection;
-  this.databaseList = db.databaseList;
-  this.defaultDatabase = lastInObject(db.databaseList);
-};
+// var EventModel = function EventModel() {
+//   this.connection = db.connection;
+//   this.databaseList = db.databaseList;
+//   this.defaultDatabase = lastInObject(db.databaseList);
+// };
+
+// var EventModel = function EventModel() {};
+// EventModel.prototype = new Model(db);
+var eventModel = new Model(db);
 
 /**
  * Saves the latest design document to database
@@ -24,7 +29,7 @@ var EventModel = function EventModel() {
  */
 
 
-EventModel.prototype.syncDesignDoc =
+eventModel.syncDesignDoc =
 function syncDesignDoc(db, callback) {
 
   var database;
@@ -67,31 +72,31 @@ function syncDesignDoc(db, callback) {
  * @param {String} db - database key
  */
 
-EventModel.prototype.findAll =
-function findAll(db) {
-
-  var database;
-
-  if (typeof db === "string" || db instanceof String) {
-    database = this.databaseList[db];
-  } else {
-    database = this.defaultDatabase;
-  }
-
-  return new Promise(function(fullfill, reject) {
-    database.view('tweets', 'all', function(err, body) {
-      var docs = [];
-      if (err) return reject(err);
-
-      body.rows.forEach(function (row) {
-        docs.push(row);
-      });
-
-      fullfill(docs);
-    });
-  });
-
-};
+// EventModel.prototype.findAll =
+// function findAll(db) {
+//
+//   var database;
+//
+//   if (typeof db === "string" || db instanceof String) {
+//     database = this.databaseList[db];
+//   } else {
+//     database = this.defaultDatabase;
+//   }
+//
+//   return new Promise(function(fullfill, reject) {
+//     database.view('tweets', 'all', function(err, body) {
+//       var docs = [];
+//       if (err) return reject(err);
+//
+//       body.rows.forEach(function (row) {
+//         docs.push(row);
+//       });
+//
+//       fullfill(docs);
+//     });
+//   });
+//
+// };
 
 /**
  * Returns all the documents by type from a database
@@ -100,31 +105,31 @@ function findAll(db) {
  * @param {String} docType - 'event_info' / 'all_tweets'
  */
 
-EventModel.prototype.findByType =
-function findByType(db, docType) {
-
-  var database;
-
-  if (typeof db === "string" || db instanceof String) {
-    database = this.databaseList[db];
-  } else {
-    database = this.defaultDatabase;
-  }
-
-  return new Promise(function(fullfill, reject) {
-    database.view('tweets', docType, function(err, body) {
-      var docs = [];
-      if (err) return reject(err);
-
-      body.rows.forEach(function (row) {
-        docs.push(row);
-      });
-
-      fullfill(docs);
-    });
-  });
-
-};
+// EventModel.prototype.findByType =
+// function findByType(db, docType) {
+//
+//   var database;
+//
+//   if (typeof db === "string" || db instanceof String) {
+//     database = this.databaseList[db];
+//   } else {
+//     database = this.defaultDatabase;
+//   }
+//
+//   return new Promise(function(fullfill, reject) {
+//     database.view('tweets', docType, function(err, body) {
+//       var docs = [];
+//       if (err) return reject(err);
+//
+//       body.rows.forEach(function (row) {
+//         docs.push(row);
+//       });
+//
+//       fullfill(docs);
+//     });
+//   });
+//
+// };
 
 /**
  * Saves a document (tweet) to the database
@@ -134,24 +139,25 @@ function findByType(db, docType) {
  * @param {Function} callback
  */
 
-EventModel.prototype.save =
-function save(db, tweet, callback) {
+// EventModel.prototype.save =
+// function save(db, tweet, callback) {
+//
+//   var database;
+//
+//   if (typeof db === "string" || db instanceof String) {
+//     database = this.databaseList[db];
+//   } else {
+//     database = this.defaultDatabase;
+//   }
+//
+//   database.insert(tweet, tweet.id_str, function callback(err, res) {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       console.log(`Tweet ${tweet.id_str} saved to db`);
+//     }
+//   });
+// }
+//
 
-  var database;
-
-  if (typeof db === "string" || db instanceof String) {
-    database = this.databaseList[db];
-  } else {
-    database = this.defaultDatabase;
-  }
-
-  database.insert(tweet, tweet.id_str, function callback(err, res) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(`Tweet ${tweet.id_str} saved to db`);
-    }
-  });
-}
-
-module.exports = EventModel;
+module.exports = eventModel;
