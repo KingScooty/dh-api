@@ -159,9 +159,9 @@ describe('Model', () => {
       .then(function(response) {
         expect(response).to.be.ok;
         expect(response).to.have.length(3);
-        expect(response[0].doc.id_str).to.equal(tweetMock0.id_str);
-        expect(response[1].doc.id_str).to.equal(tweetMock1.id_str);
-        expect(response[2].id).to.equal(eventMock0._id);
+        expect(response[0].id_str).to.equal(tweetMock0.id_str);
+        expect(response[1].id_str).to.equal(tweetMock1.id_str);
+        expect(response[2]._id).to.equal(eventMock0._id);
         done();
       }).catch(function(err) {
         console.log(err);
@@ -177,8 +177,8 @@ describe('Model', () => {
       .then(function(response) {
         expect(response).to.be.ok;
         expect(response).to.have.length(2);
-        expect(response[0].doc.id_str).to.equal(tweetMock0.id_str);
-        expect(response[1].id).to.equal(eventMock1._id);
+        expect(response[0].id_str).to.equal(tweetMock0.id_str);
+        expect(response[1]._id).to.equal(eventMock1._id);
         done();
       })
       .catch(function(err) {
@@ -217,7 +217,7 @@ describe('Model', () => {
       .then(function(response) {
         expect(response).to.be.ok;
         expect(response).to.have.length(1);
-        expect(response[0].id).to.equal(eventMock0._id);
+        expect(response[0]._id).to.equal(eventMock0._id);
         done();
       })
       .catch(function(err) {
@@ -234,8 +234,8 @@ describe('Model', () => {
       .then(function(response) {
         expect(response).to.be.ok;
         expect(response).to.have.length(2);
-        expect(response[0].value.id_str).to.equal(tweetMock0.id_str);
-        expect(response[1].value.id_str).to.equal(tweetMock1.id_str);
+        expect(response[0].id_str).to.equal(tweetMock0.id_str);
+        expect(response[1].id_str).to.equal(tweetMock1.id_str);
         done();
       })
       .catch(function(err) {
@@ -252,7 +252,7 @@ describe('Model', () => {
       .then(function(response) {
         expect(response).to.be.ok;
         expect(response).to.have.length(1);
-        expect(response[0].id).to.equal(eventMock1._id);
+        expect(response[0]._id).to.equal(eventMock1._id);
         done();
       })
       .catch(function(err) {
@@ -269,7 +269,7 @@ describe('Model', () => {
       .then(function(response) {
         expect(response).to.be.ok;
         expect(response).to.have.length(1);
-        expect(response[0].value.id_str).to.equal(tweetMock0.id_str);
+        expect(response[0].id_str).to.equal(tweetMock0.id_str);
         done();
       })
       .catch(function(err) {

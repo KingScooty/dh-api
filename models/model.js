@@ -1,14 +1,14 @@
+'use strict';
+
 var lastInObject = require('../helpers/last_in_object');
 var updateDoc = require('../helpers/couchdb/update_doc');
 var Promise = require('bluebird');
 
-
-var Model = function Model(db) {
-  this.connection = db.connection; // maybe point to config instead??
-  this.databaseList = db.databaseList;
-  this.defaultDatabase = lastInObject(db.databaseList);
+var Model = function Model(dbName) {
+  this.connection = dbName.connection; // maybe point to config instead??
+  this.databaseList = dbName.databaseList;
+  this.defaultDatabase = lastInObject(dbName.databaseList);
 };
-
 
 /**
  * Returns all the documents from a database
@@ -17,12 +17,12 @@ var Model = function Model(db) {
  */
 
 Model.prototype.listAll =
-function listAll(db) {
+function listAll(dbName) {
 
   var database;
 
-  if (typeof db === "string" || db instanceof String) {
-    database = this.databaseList[db];
+  if (typeof dbName === "string" || dbName instanceof String) {
+    database = this.databaseList[dbName];
   } else {
     database = this.defaultDatabase;
   }
@@ -36,7 +36,7 @@ function listAll(db) {
       if (err) return reject(err);
 
       body.rows.forEach(function (row) {
-        docs.push(row);
+        docs.push(row.doc);
       });
 
       fullfill(docs);
@@ -53,12 +53,12 @@ function listAll(db) {
  */
 
 Model.prototype.findByType =
-function findByType(db, designDocName, docType) {
+function findByType(dbName, designDocName, docType) {
 
   var database;
 
-  if (typeof db === "string" || db instanceof String) {
-    database = this.databaseList[db];
+  if (typeof dbName === "string" || dbName instanceof String) {
+    database = this.databaseList[dbName];
   } else {
     database = this.defaultDatabase;
   }
@@ -69,7 +69,7 @@ function findByType(db, designDocName, docType) {
       if (err) return reject(err);
 
       body.rows.forEach(function (row) {
-        docs.push(row);
+        docs.push(row.value);
       });
 
       fullfill(docs);

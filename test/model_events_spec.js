@@ -123,72 +123,62 @@ describe('Event', () => {
   });
 
   it('should set an internal database connection', () => {
-    // var eventModel = new Event();
 
     expect(eventModel.connection).to.be.an.instanceOf(Object)
       .and.have.any.keys('config', 'db');
   });
 
   it('should set an internal database list', () => {
-    // var eventModel = new Event();
 
     expect(eventModel.databaseList).to.be.an.instanceOf(Object)
       .and.have.all.keys('db1', 'db2');
   });
 
   it('should set an internal default database', () => {
-    // var eventModel = new Event();
     expect(eventModel.defaultDatabase).to.be.an.instanceOf(Object);
   });
 
   it('should set the default database to the last known event', () => {
-    // var eventModel = new Event();
 
     expect(eventModel.defaultDatabase.config.db)
       .to.equal('dh_halloween15_test');
   });
 
 
-  // describe('syncDesignDoc()', () => {
-  //   it('should save the latest design doc to the default database', (done) => {
-  //
-  //     // var eventModel = new Event();
-  //
-  //     eventModel.syncDesignDoc(null, function(err, response) {
-  //       if (err) return console.log(err);
-  //       expect(response).to.be.ok;
-  //       expect(response.id).to.equal('_design/tweets');
-  //       done();
-  //     });
-  //
-  //   });
-  //
-  //   it('should save the latest design doc to a specified database', (done) => {
-  //
-  //     // var eventModel = new Event();
-  //
-  //     eventModel.syncDesignDoc('dh_2016', function(err, response) {
-  //       if (err) return console.log(err);
-  //       expect(response).to.be.ok;
-  //       expect(response.id).to.equal('_design/tweets');
-  //       done();
-  //     });
-  //
-  //   });
-  // });
+  describe('syncDesignDoc()', () => {
+    it('should save the latest design doc to the default database', (done) => {
+
+      eventModel.syncDesignDoc(null, function(err, response) {
+        if (err) return console.log(err);
+        expect(response).to.be.ok;
+        expect(response.id).to.equal('_design/tweets');
+        done();
+      });
+
+    });
+
+    it('should save the latest design doc to a specified database', (done) => {
+
+      eventModel.syncDesignDoc('db1', function(err, response) {
+        if (err) return console.log(err);
+        expect(response).to.be.ok;
+        expect(response.id).to.equal('_design/tweets');
+        done();
+      });
+
+    });
+  });
 
   describe('listAll()', () => {
     it('should return the all docs from the default database', (done) => {
-
-      // var eventModel = new Event();
 
       eventModel.listAll()
       .then(function(response) {
         expect(response).to.be.ok;
         expect(response).to.have.length(3);
-        expect(response[0].doc.id_str).to.equal(tweetMock0.id_str);
-        expect(response[1].doc.id_str).to.equal(tweetMock1.id_str);
-        expect(response[2].id).to.equal(eventMock0._id);
+        expect(response[0].id_str).to.equal(tweetMock0.id_str);
+        expect(response[1].id_str).to.equal(tweetMock1.id_str);
+        expect(response[2]._id).to.equal(eventMock0._id);
         done();
       }).catch(function(err) {
         console.log(err);
@@ -196,23 +186,14 @@ describe('Event', () => {
 
     });
 
-    // expect(response).to.be.ok;
-    // expect(response).to.have.length(3);
-    // expect(response[0].doc.id_str).to.equal(tweetMock0.id_str);
-    // expect(response[1].doc.id_str).to.equal(tweetMock1.id_str);
-    // expect(response[2].id).to.equal(eventMock0._id);
-    // done();
-
     it('should return the all docs from the a specified database', (done) => {
-
-      // var eventModel = new Event();
 
       eventModel.listAll('db1')
       .then(function(response) {
         expect(response).to.be.ok;
         expect(response).to.have.length(2);
-        expect(response[0].doc.id_str).to.equal(tweetMock0.id_str);
-        expect(response[1].id).to.equal(eventMock1._id);
+        expect(response[0].id_str).to.equal(tweetMock0.id_str);
+        expect(response[1]._id).to.equal(eventMock1._id);
         done();
       })
       .catch(function(err) {
@@ -223,7 +204,6 @@ describe('Event', () => {
 
     // it('should gracefully fail if database does not exist', (done) => {
     //
-      // var eventModel = new Event();
     //
     //   eventModel.findAll('fail')
     //   .then(function(response) {
@@ -245,13 +225,11 @@ describe('Event', () => {
 
     it('should return all documents by event type only from default database', (done) => {
 
-      // var eventModel = new Event();
       eventModel.findByType(null, 'tweets', 'event_info')
-      // eventModel.findByType(null, 'event_info')
       .then(function(response) {
         expect(response).to.be.ok;
         expect(response).to.have.length(1);
-        expect(response[0].id).to.equal(eventMock0._id);
+        expect(response[0]._id).to.equal(eventMock0._id);
         done();
       })
       .catch(function(err) {
@@ -262,14 +240,12 @@ describe('Event', () => {
 
     it('should return all documents by tweet type only from default database', (done) => {
 
-      // var eventModel = new Event();
       eventModel.findByType(null, 'tweets', 'all_tweets')
-      // eventModel.findByType(null, 'all_tweets')
       .then(function(response) {
         expect(response).to.be.ok;
         expect(response).to.have.length(2);
-        expect(response[0].value.id_str).to.equal(tweetMock0.id_str);
-        expect(response[1].value.id_str).to.equal(tweetMock1.id_str);
+        expect(response[0].id_str).to.equal(tweetMock0.id_str);
+        expect(response[1].id_str).to.equal(tweetMock1.id_str);
         done();
       })
       .catch(function(err) {
@@ -280,13 +256,11 @@ describe('Event', () => {
 
     it('should return all documents by event type only from specified database', (done) => {
 
-      // var eventModel = new Event();
       eventModel.findByType('db1', 'tweets', 'event_info')
-      // eventModel.findByType('dh_2016', 'event_info')
       .then(function(response) {
         expect(response).to.be.ok;
         expect(response).to.have.length(1);
-        expect(response[0].id).to.equal(eventMock1._id);
+        expect(response[0]._id).to.equal(eventMock1._id);
         done();
       })
       .catch(function(err) {
@@ -297,14 +271,12 @@ describe('Event', () => {
 
     it('should return all documents by tweet type only from specified database', (done) => {
 
-      // var eventModel = new Event();
 
       eventModel.findByType('db1', 'tweets', 'all_tweets')
-      // eventModel.findByType('dh_2016', 'all_tweets')
       .then(function(response) {
         expect(response).to.be.ok;
         expect(response).to.have.length(1);
-        expect(response[0].value.id_str).to.equal(tweetMock0.id_str);
+        expect(response[0].id_str).to.equal(tweetMock0.id_str);
         done();
       })
       .catch(function(err) {

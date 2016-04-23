@@ -13,14 +13,12 @@ var eventModel = new Model(db);
  * @param {Function} callback
  */
 
-
-eventModel.syncDesignDoc =
-function syncDesignDoc(db, callback) {
+eventModel.syncDesignDoc = function syncDesignDoc(dbName, callback) {
 
   var database;
 
-  if (typeof db === "string" || db instanceof String) {
-    database = this.databaseList[db];
+  if (typeof dbName === "string" || dbName instanceof String) {
+    database = this.databaseList[dbName];
   } else {
     database = this.defaultDatabase;
   }
@@ -60,7 +58,7 @@ function syncDesignDoc(db, callback) {
  * @param {Function} callback
  */
 
-// EventModel.prototype.save =
+// eventModel.prototype.save =
 // function save(db, tweet, callback) {
 //
 //   var database;

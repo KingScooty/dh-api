@@ -16,7 +16,6 @@ const eventModel = require('../models/events');
 describe('API', () => {
 
   before(() => {
-
     var docs = new Promise(function(fullfill, reject) {
       fullfill({});
     });
@@ -85,6 +84,10 @@ describe('API', () => {
           .expect(404, done);
       });
     });
+  });
+
+  after(() => {
+    sinon.restore(eventModel);
   });
 
 });

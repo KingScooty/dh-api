@@ -30,13 +30,12 @@ module.exports.existingTweets = function existingTweets (io) {
   io.on('connection', () => {
 
     var tweets = co(function* () {
-      return yield eventModel.findByType('dh_halloween15', 'all_tweets');
+      var tweets = yield eventModel.findByType(null, 'tweets', 'all_tweets');
+      return tweets;
     });
 
     tweets().then(function(result) {
-      console.log('ello?');
-      // console.log(result);
-      // io.sockets.emit('incomingTweet', result);
+      io.sockets.emit('incomingTweet', result);
     });
 
   });
