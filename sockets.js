@@ -2,12 +2,6 @@ const Promise = require('bluebird');
 const co = Promise.coroutine;
 
 const eventModel = require('./models/events');
-// const eventModel = new Event();
-
-//sockets needs to:
-// greet client on first connect
-//emit an db content on first connect
-//emit db change when feed follow detects a change
 
 module.exports.newTweets = function newTweets (io, feed) {
 
