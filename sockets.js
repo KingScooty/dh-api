@@ -3,7 +3,7 @@ const co = Promise.coroutine;
 
 const eventModel = require('./models/events');
 
-module.exports.newTweets = function newTweets (io, feed) {
+function newTweets (io, feed) {
 
   feed.on('change', function(change) {
     var doc = change.doc;
@@ -13,14 +13,14 @@ module.exports.newTweets = function newTweets (io, feed) {
 
 };
 
-module.exports.greeting = function greeting (io) {
+function greeting (io) {
   io.on('connection', () => {
     // console.log(`SERVER: New user connected at ${(new Date).toISOString()}`);
     io.sockets.emit('greeting', `CLIENT: Connected at ${(new Date).toISOString()}`);
   });
 };
 
-module.exports.existingTweets = function existingTweets (io) {
+function existingTweets (io) {
   io.on('connection', () => {
 
     var tweets = co(function* () {
@@ -34,3 +34,15 @@ module.exports.existingTweets = function existingTweets (io) {
 
   });
 };
+
+function socketsInit(io, feed) {
+  greeting(io);
+  existingTweets(io);
+  newTweets(io, feed);
+}
+
+module.exports.greeting = greeting;
+module.exports.existingTweets = existingTweets;
+module.exports.newTweets = newTweets;
+
+module.exports.socketsInit = socketsInit;

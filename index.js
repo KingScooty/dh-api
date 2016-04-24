@@ -19,7 +19,7 @@ const getServer = () => {
 
   const io = socketIo.listen(server);
   const dbFeed = require('./db_feed');
-  const eventSockets = require('./sockets')(io, dbFeed);
+  const eventSockets = require('./sockets').socketsInit(io, dbFeed);
 
   return server;
 };
