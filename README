@@ -17,3 +17,6 @@ Requests to the API should
   - be saved to couchdb
   - trigger a push event
     - notifies all connected clients of a change
+
+
+Example API URL: `/api/event/2015/id/2342352365`
