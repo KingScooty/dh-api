@@ -29,7 +29,8 @@ dependencies:
 
 test:
   override:
-    - NODE_ENV=test DB_HOST=http://127.0.0.1 npm test
+    - npm install
+    - NODE_ENV=test DB_HOST=http://127.0.0.1 npm run test
     # - docker-compose -f docker-compose.production.yml
     # - docker-compose -f docker-compose.test.yml up -d
     # - docker-compose -f docker-compose.test.yml run npm run test
