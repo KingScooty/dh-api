@@ -11,13 +11,11 @@ machine:
     # - sudo -H pip install tutum
     # - tutum -v
   post:
-    - docker login -e ${DOCKER_EMAIL} -u ${DOCKER_USER} -p ${DOCKER_PASS} ${DOCKER_SERVER}
+    - docker login -e ${DOCKER_EMAIL} -u ${DOCKER_USER} -p ${DOCKER_PASS}
 
 dependencies:
   pre:
     - docker --version
-    - sudo curl -L https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-    - sudo chmod +x /usr/local/bin/docker-compose
     - docker-compose --version
   # override:
   #   - npm install:
