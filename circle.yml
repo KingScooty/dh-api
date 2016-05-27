@@ -16,6 +16,7 @@ machine:
 dependencies:
   pre:
     - docker --version
+    - sudo pip install -U docker-compose==1.4.2
     - docker-compose --version
   # override:
   #   - npm install:
