@@ -6,6 +6,7 @@ let nano;
 if (process.env.NODE_ENV === 'production') {
   const user =  config.database.auth.username;
   const pass =  config.database.auth.password;
+
   nano = require('nano')(`http://${user}:${pass}@${host}`);
 } else {
   nano = require('nano')(`http://${host}`);
