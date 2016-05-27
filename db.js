@@ -1,7 +1,17 @@
 const config = require('./config/');
-const host =  config.database.host;
 
-var nano = require('nano')(`http://${host}`);
+const host =  config.database.host;
+const user =  config.database.auth.username;
+const pass =  config.database.auth.password;
+
+let nano;
+
+if (process.env.NODE_ENV === 'production') {
+  nano = require('nano')(`http://${user}:${pass}@${host}`);
+} else {
+  nano = require('nano')(`http://${host}`);
+}
+
 var lastInObject = require('./helpers/last_in_object');
 
 /*

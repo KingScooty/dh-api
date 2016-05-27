@@ -1,0 +1,49 @@
+machine:
+  node:
+    version: 6.2.0
+  # Set the timezeone - any value from /usr/share/zoneinfo/ is valid here
+  timezone:
+    Europe/London
+  services:
+    - docker
+  pre:
+    # - sudo curl -L -o /usr/bin/docker 'http://s3-external-1.amazonaws.com/circle-downloads/docker-1.8.2-circleci'; sudo chmod 0755 /usr/bin/docker; true
+    # - sudo -H pip install tutum
+    # - tutum -v
+  post:
+    - docker login -e ${DOCKER_EMAIL} -u ${DOCKER_USER} -p ${DOCKER_PASS} ${DOCKER_SERVER}
+
+dependencies:
+  pre:
+    - docker --version
+    - sudo pip install -U docker-compose==1.7.1
+  # override:
+  #   - npm install:
+  #       pwd: node
+  # post:
+  #   - npm run bower_install:
+  #       pwd: node
+  #   - npm run grunt_build:
+  #       pwd: node
+
+test:
+  override:
+    - NODE_ENV=test DB_HOST=http://127.0.0.1 npm run test
+    # - docker-compose -f docker-compose.production.yml
+    # - docker-compose -f docker-compose.test.yml up -d
+    # - docker-compose -f docker-compose.test.yml run npm run test
+
+# deployment:
+#   staging:
+#     branch: staging
+#     commands:
+#       - docker-compose -f docker-compose.production.yml build node
+#       - docker tag dh_node:latest tutum.co/${DOCKER_USER}/dh_node:staging
+#       - docker push tutum.co/${DOCKER_USER}/dh_node:staging
+#
+#   master:
+#       branch: master
+#       commands:
+#         - docker-compose -f docker-compose.production.yml build node
+#         - docker tag dh_node:latest tutum.co/${DOCKER_USER}/dh_node:production
+#         - docker push tutum.co/${DOCKER_USER}/dh_node:production
