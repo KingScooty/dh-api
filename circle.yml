@@ -5,18 +5,20 @@ machine:
   timezone:
     Europe/London
   pre:
-    - sudo curl -L -o /usr/bin/docker 'https://s3-external-1.amazonaws.com/circle-downloads/docker-1.10.0-circleci'
-    - sudo chmod 0755 /usr/bin/docker
-  services:
-    - docker
+    - |
+      sudo curl -L -o /usr/bin/docker 'http://s3-external-1.amazonaws.com/circle-downloads/docker-1.10.0-circleci'
+      sudo chmod 0755 /usr/bin/docker
+      sudo service docker start
+  # services:
+  #   - docker
   post:
     - docker login -e ${DOCKER_EMAIL} -u ${DOCKER_USER} -p ${DOCKER_PASS}
 
 dependencies:
   pre:
     - docker --version
-    - sudo pip install -U docker-compose==1.4.2
-    - docker-compose --version
+    # - sudo pip install -U docker-compose==1.4.2
+    # - docker-compose --version
   override:
     - npm install
   #       pwd: node
