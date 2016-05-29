@@ -34,7 +34,7 @@ test:
     # - docker-compose -f docker-compose.test.yml up -d
     # - docker-compose -f docker-compose.test.yml run npm run test
 
-# deployment:
+deployment:
 #   staging:
 #     branch: staging
 #     commands:
@@ -42,9 +42,12 @@ test:
 #       - docker tag dh_node:latest tutum.co/${DOCKER_USER}/dh_node:staging
 #       - docker push tutum.co/${DOCKER_USER}/dh_node:staging
 #
-#   master:
-#       branch: master
-#       commands:
-#         - docker-compose -f docker-compose.production.yml build node
-#         - docker tag dh_node:latest tutum.co/${DOCKER_USER}/dh_node:production
-#         - docker push tutum.co/${DOCKER_USER}/dh_node:production
+  master:
+      branch: master
+      commands:
+        - docker build -t ${DOCKER_USER}/dh-api:latest -t ${DOCKER_USER}/dh-api:${CIRCLE_BUILD_NUM} .
+        # - docker-compose -f docker-compose.production.yml build node
+        # - docker tag dh-api:latest ${DOCKER_USER}/dh-api:latest
+        # - docker tag dh-api:${CIRCLE_BUILD_NUM} ${DOCKER_USER}/dh-api:${CIRCLE_BUILD_NUM}
+        - docker push ${DOCKER_USER}/dh-api:latest
+        - docker push ${DOCKER_USER}/dh-api:${CIRCLE_BUILD_NUM}
