@@ -49,5 +49,5 @@ deployment:
         # - docker-compose -f docker-compose.production.yml build node
         # - docker tag dh-api:latest ${DOCKER_USER}/dh-api:latest
         # - docker tag dh-api:${CIRCLE_BUILD_NUM} ${DOCKER_USER}/dh-api:${CIRCLE_BUILD_NUM}
-        - docker push ${DOCKER_USER}/dh-api:latest
-        - docker push ${DOCKER_USER}/dh-api:${CIRCLE_BUILD_NUM}
+        - docker push ${DOCKER_USER}/dh-api
+        # - docker push ${DOCKER_USER}/dh-api:${CIRCLE_BUILD_NUM}
