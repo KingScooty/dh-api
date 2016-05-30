@@ -3,6 +3,8 @@
 // const co = Promise.coroutine;
 const Compress = require('koa-compress');
 const Morgan = require('koa-morgan');
+const Promise = require('bluebird');
+const co = Promise.coroutine;
 
 // middleware
 
@@ -10,6 +12,12 @@ const Koa = require('koa');
 const api = new Koa();
 
 const logger = Morgan('combined');
+
+api.use(co(function *(ctx, next) {
+  ctx.set("Access-Control-Allow-Origin", "*");
+  ctx.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  yield next();
+}));
 
 api.use(Compress({
     flush: require('zlib').Z_SYNC_FLUSH
@@ -23,6 +31,7 @@ const router = require('./routes/')(api);
 // router(api);
 
 api.use(logger);
+
 
 // api
 //   .use(router.routes())
