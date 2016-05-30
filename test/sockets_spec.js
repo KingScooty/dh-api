@@ -157,9 +157,9 @@ describe('Sockets', () => {
       var returnedResponse;
 
       // Maybe move this over to the model and filter before returning
-      delete response[0]._rev;
+      delete response.body[0]._rev;
 
-      expect(response).to.deep.equal(expectedResponse);
+      expect(response.body).to.deep.equal(expectedResponse);
       done();
     });
 

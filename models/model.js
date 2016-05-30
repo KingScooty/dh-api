@@ -2,6 +2,7 @@
 
 var lastInObject = require('../helpers/last_in_object');
 var updateDoc = require('../helpers/couchdb/update_doc');
+var _ = require('lodash');
 var Promise = require('bluebird');
 
 var Model = function Model(dbName) {
@@ -32,14 +33,19 @@ function listAll(dbName) {
       endkey: '_',
       include_docs: true
     }, function(err, body) {
-      var docs = [];
+      var response = {};
       if (err) return reject(err);
 
-      body.rows.forEach(function (row) {
-        docs.push(row.doc);
-      });
+      response.success = true;
+      response.body = _.chain(body.rows)
+        .map(function(row) {
+          return row.doc;
+        })
+        .sortBy('type')
+        .groupBy('type')
+        .value();
 
-      fullfill(docs);
+      fullfill(response);
     });
   });
 
@@ -65,14 +71,15 @@ function findByType(dbName, designDocName, docType) {
 
   return new Promise(function(fullfill, reject) {
     database.view(designDocName, docType, function(err, body) {
-      var docs = [];
+      var response = {};
       if (err) return reject(err);
 
-      body.rows.forEach(function (row) {
-        docs.push(row.value);
+      response.success = true;
+      response.body = body.rows.map(function(row) {
+        return row.value;
       });
 
-      fullfill(docs);
+      fullfill(response);
     });
   });
 

@@ -157,11 +157,12 @@ describe('Model', () => {
 
       model.listAll()
       .then(function(response) {
-        expect(response).to.be.ok;
-        expect(response).to.have.length(3);
-        expect(response[0].id_str).to.equal(tweetMock0.id_str);
-        expect(response[1].id_str).to.equal(tweetMock1.id_str);
-        expect(response[2]._id).to.equal(eventMock0._id);
+        expect(response.success).to.be.ok;
+        expect(response.body.tweet).to.have.length(2);
+        expect(response.body.info).to.have.length(1);
+        expect(response.body.tweet[0].id_str).to.equal(tweetMock0.id_str);
+        expect(response.body.tweet[1].id_str).to.equal(tweetMock1.id_str);
+        expect(response.body.info[0]._id).to.equal(eventMock0._id);
         done();
       }).catch(function(err) {
         console.log(err);
@@ -175,10 +176,11 @@ describe('Model', () => {
 
       model.listAll('db1')
       .then(function(response) {
-        expect(response).to.be.ok;
-        expect(response).to.have.length(2);
-        expect(response[0].id_str).to.equal(tweetMock0.id_str);
-        expect(response[1]._id).to.equal(eventMock1._id);
+        expect(response.success).to.be.ok;
+        expect(response.body.tweet).to.have.length(1);
+        expect(response.body.info).to.have.length(1);
+        expect(response.body.tweet[0].id_str).to.equal(tweetMock0.id_str);
+        expect(response.body.info[0]._id).to.equal(eventMock1._id);
         done();
       })
       .catch(function(err) {
@@ -215,9 +217,9 @@ describe('Model', () => {
 
       model.findByType(null, 'tweets', 'event_info')
       .then(function(response) {
-        expect(response).to.be.ok;
-        expect(response).to.have.length(1);
-        expect(response[0]._id).to.equal(eventMock0._id);
+        expect(response.success).to.be.ok;
+        expect(response.body).to.have.length(1);
+        expect(response.body[0]._id).to.equal(eventMock0._id);
         done();
       })
       .catch(function(err) {
@@ -232,10 +234,10 @@ describe('Model', () => {
 
       model.findByType(null, 'tweets', 'all_tweets')
       .then(function(response) {
-        expect(response).to.be.ok;
-        expect(response).to.have.length(2);
-        expect(response[0].id_str).to.equal(tweetMock0.id_str);
-        expect(response[1].id_str).to.equal(tweetMock1.id_str);
+        expect(response.success).to.be.ok;
+        expect(response.body).to.have.length(2);
+        expect(response.body[0].id_str).to.equal(tweetMock0.id_str);
+        expect(response.body[1].id_str).to.equal(tweetMock1.id_str);
         done();
       })
       .catch(function(err) {
@@ -250,9 +252,9 @@ describe('Model', () => {
 
       model.findByType('db1', 'tweets', 'event_info')
       .then(function(response) {
-        expect(response).to.be.ok;
-        expect(response).to.have.length(1);
-        expect(response[0]._id).to.equal(eventMock1._id);
+        expect(response.success).to.be.ok;
+        expect(response.body).to.have.length(1);
+        expect(response.body[0]._id).to.equal(eventMock1._id);
         done();
       })
       .catch(function(err) {
@@ -267,9 +269,9 @@ describe('Model', () => {
 
       model.findByType('db1', 'tweets', 'all_tweets')
       .then(function(response) {
-        expect(response).to.be.ok;
-        expect(response).to.have.length(1);
-        expect(response[0].id_str).to.equal(tweetMock0.id_str);
+        expect(response.body).to.be.ok;
+        expect(response.body).to.have.length(1);
+        expect(response.body[0].id_str).to.equal(tweetMock0.id_str);
         done();
       })
       .catch(function(err) {
