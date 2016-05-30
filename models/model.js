@@ -73,12 +73,19 @@ function findByType(dbName, designDocName, docType) {
   return new Promise(function(fullfill, reject) {
     database.view(designDocName, docType, {descending: true}, function(err, body) {
       var response = {};
+      var docs;
       if (err) return reject(err);
 
       response.success = true;
-      response.body = body.rows.map(function(row) {
+      docs = body.rows.map(function(row) {
         return row.value;
       });
+
+      if (docs.length === 1) {
+        response.body = docs[0];
+      } else {
+        response.body = docs;
+      }
 
       fullfill(response);
     });
