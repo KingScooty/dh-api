@@ -177,8 +177,9 @@ describe('Event', () => {
         expect(response.success).to.be.ok;
         expect(response.body.tweet).to.have.length(2);
         expect(response.body.info).to.have.length(1);
-        expect(response.body.tweet[0].id_str).to.equal(tweetMock0.id_str);
-        expect(response.body.tweet[1].id_str).to.equal(tweetMock1.id_str);
+        // Flipped because of descending!
+        expect(response.body.tweet[1].id_str).to.equal(tweetMock0.id_str);
+        expect(response.body.tweet[0].id_str).to.equal(tweetMock1.id_str);
         expect(response.body.info[0]._id).to.equal(eventMock0._id);
         done();
       }).catch(function(err) {
@@ -246,8 +247,9 @@ describe('Event', () => {
       .then(function(response) {
         expect(response.success).to.be.ok;
         expect(response.body).to.have.length(2);
-        expect(response.body[0].id_str).to.equal(tweetMock0.id_str);
-        expect(response.body[1].id_str).to.equal(tweetMock1.id_str);
+        // Flipped because of descending!
+        expect(response.body[1].id_str).to.equal(tweetMock0.id_str);
+        expect(response.body[0].id_str).to.equal(tweetMock1.id_str);
         done();
       })
       .catch(function(err) {

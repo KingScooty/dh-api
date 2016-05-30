@@ -30,8 +30,9 @@ function listAll(dbName) {
 
   return new Promise(function(fullfill, reject) {
     database.list({
-      endkey: '_',
-      include_docs: true
+      startkey: '_',
+      include_docs: true,
+      descending: true
     }, function(err, body) {
       var response = {};
       if (err) return reject(err);
@@ -70,7 +71,7 @@ function findByType(dbName, designDocName, docType) {
   }
 
   return new Promise(function(fullfill, reject) {
-    database.view(designDocName, docType, function(err, body) {
+    database.view(designDocName, docType, {descending: true}, function(err, body) {
       var response = {};
       if (err) return reject(err);
 
