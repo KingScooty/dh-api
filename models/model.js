@@ -81,7 +81,7 @@ function findByType(dbName, designDocName, docType) {
         return row.value;
       });
 
-      if (docs.length === 1) {
+      if (docType === 'event_info') {
         response.body = docs[0];
       } else {
         response.body = docs;
