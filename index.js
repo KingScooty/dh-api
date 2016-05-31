@@ -17,7 +17,7 @@ const getServer = () => {
     },
   }, api.callback());
 
-  const io = socketIo.listen(server);
+  const io = socketIo(server, { path: '/api/sockets' }); //.listen(server);
   const dbFeed = require('./db_feed');
   const eventSockets = require('./sockets').socketsInit(io, dbFeed);
 
