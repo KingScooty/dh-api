@@ -14,8 +14,16 @@ const api = new Koa();
 const logger = Morgan('combined');
 
 api.use(co(function *(ctx, next) {
-  ctx.set("Access-Control-Allow-Origin", "*");
-  ctx.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  var allowedOrigins = ['http://localhost:3000', 'http://localhost:3001'];
+  var origin = ctx.headers.origin;
+
+  if(allowedOrigins.indexOf(origin) > -1){
+    ctx.set('Access-Control-Allow-Origin', origin);
+  }
+
+  // ctx.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  ctx.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  ctx.set('Access-Control-Allow-Credentials', true);
   yield next();
 }));
 
