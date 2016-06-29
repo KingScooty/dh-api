@@ -37,7 +37,7 @@ function existingTweets (io) {
 
 function socketsInit(io, feed) {
   greeting(io);
-  existingTweets(io);
+  // existingTweets(io);
   newTweets(io, feed);
 }
 

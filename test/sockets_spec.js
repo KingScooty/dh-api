@@ -145,6 +145,7 @@ describe('Sockets', () => {
     });
   });
 
+/*
   it('emits dump of db on connection', (done) => {
     var client1;
     var db = nano.use('dbtest');
@@ -165,6 +166,7 @@ describe('Sockets', () => {
 
     apiSockets.existingTweets(ioServer);
   });
+*/
 
   it('emits the db change over sockets when detected', (done) => {
     var client1;
