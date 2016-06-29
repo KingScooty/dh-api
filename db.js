@@ -33,7 +33,8 @@ var databaseList = {
   dh_2013: nano.use('digitalheroes-2013'),
   dh_2014: nano.use('digitalheroes-2014'),
   dh_2015: nano.use('digitalheroes-2015'),
-  dh_halloween15: nano.use('digitalheroes-halloween-2015')
+  dh_halloween15: nano.use('digitalheroes-halloween-2015'),
+  dh_2016: nano.use('digitalheroes-2016')
 }
 
 var database = {
