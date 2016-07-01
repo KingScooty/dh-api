@@ -22,6 +22,45 @@ router.get('/', (ctx, next) => {
 
 
 /**
+ * GET latest
+ */
+
+const LATEST = 'dh_2016';
+
+router.get('/latest', co(function *(ctx, next) {
+  const year_query = LATEST; // change this to dynamically pick latest event
+  if (!databaseList.hasOwnProperty(year_query)) return ctx.throw(404);
+
+  ctx.body = yield eventModel.listAll(year_query);
+}));
+
+router.get('/latest/info', co(function *(ctx, next) {
+  var year_query = LATEST;
+  if (!databaseList.hasOwnProperty(year_query)) return ctx.throw(404);
+
+  ctx.body = yield eventModel.findByType(year_query, 'tweets', 'event_info');
+}));
+
+router.get('/latest/tweets', co(function *(ctx, next) {
+  var year_query = LATEST;
+  if (!databaseList.hasOwnProperty(year_query)) return ctx.throw(404);
+
+  ctx.body = yield eventModel.findByType(year_query, 'tweets', 'all_tweets');
+}));
+
+ /**
+  * GET hashtags by latest/hashtags.
+  */
+
+router.get('/latest/hashtags', co(function *(ctx, next) {
+  ctx.body = {
+    success: true,
+    body: ['#digitalheroes', '#digitalheroes2016']
+  }
+}));
+
+
+/**
  * GET year by :year.
  */
 
@@ -52,6 +91,17 @@ router.get('/:year/tweets', co(function *(ctx, next) {
   if (!databaseList.hasOwnProperty(year_query)) return ctx.throw(404);
 
   ctx.body = yield eventModel.findByType(year_query, 'tweets', 'all_tweets');
+}));
+
+/**
+ * GET hashtags by :year/hashtags.
+ */
+
+router.get('/:year/hashtags', co(function *(ctx, next) {
+  ctx.body = {
+    success: true,
+    body: ['#digitalheroes', `#digitalheroes${ctx.params.year}`]
+  }
 }));
 
 
