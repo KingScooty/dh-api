@@ -37,7 +37,7 @@ function listAll(dbName) {
       var response = {};
       if (err) return reject(err);
 
-      response.success = !!body.rows.length;
+      response.success = true;
       response.body = _.chain(body.rows)
         .map(function(row) {
           return row.doc;
@@ -75,7 +75,7 @@ function findByType(dbName, designDocName, docType) {
       var response = {};
       if (err) return reject(err);
 
-      response.success = !!body.rows.length;
+      response.success = true;
       response.body = body.rows.map(function(row) {
         return row.value;
       });

@@ -83,8 +83,8 @@ router.get('/latest/hashtags', co(function *(ctx, next) {
   var random = Math.floor(Math.random()*length);
 
   ctx.body = {
-    success: !!length,
-    body: response.body[random]
+    success: true,
+    body: response.body[random] || {}
   }
  }));
 
@@ -97,8 +97,8 @@ router.get('/latest/hashtags', co(function *(ctx, next) {
   var random = Math.floor(Math.random()*length);
 
   ctx.body = {
-    success: !!length,
-    body: response.body[random]
+    success: true,
+    body: response.body[random] || {}
   }
  }));
 
@@ -155,8 +155,8 @@ router.get('/:year/tweets/photos/random', co(function *(ctx, next) {
   var random = Math.floor(Math.random()*length);
 
   ctx.body = {
-    success: !!length,
-    body: response.body[random]
+    success: true,
+    body: response.body[random] || {}
   }
 }));
 
