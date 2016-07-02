@@ -55,7 +55,10 @@ router.get('/latest/tweets', co(function *(ctx, next) {
 router.get('/latest/hashtags', co(function *(ctx, next) {
   ctx.body = {
     success: true,
-    body: ['#digitalheroes', '#digitalheroes2016']
+    body: {
+      client: '#digitalheroes2016',
+      worker: ['#digitalheroes', '#digital-heroes2016', '#digitalheroes2016']
+    }
   }
 }));
 
@@ -100,7 +103,10 @@ router.get('/:year/tweets', co(function *(ctx, next) {
 router.get('/:year/hashtags', co(function *(ctx, next) {
   ctx.body = {
     success: true,
-    body: ['#digitalheroes', `#digitalheroes${ctx.params.year}`]
+    body: {
+      client: `#digitalheroes${ctx.params.year}`,
+      worker: ['#digitalheroes', `#digital-heroes${ctx.params.year}`,  `#digitalheroes${ctx.params.year}`]
+    }
   }
 }));
 
