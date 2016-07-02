@@ -42,11 +42,13 @@ eventModel.syncDesignDoc = function syncDesignDoc(dbName, callback) {
       },
       "with_photos": {
         map: function(doc) {
-          var onlyPhotos = doc.extended_entities.media.every(function(mediaItem) {
-              return (mediaItem.type === 'photo' && mediaItem.type !== 'video' && mediaItem.type !== 'animated_gif');
-          });
+          if (doc.type === 'tweet') {
+            var onlyPhotos = doc.extended_entities.media.every(function(mediaItem) {
+                return (mediaItem.type === 'photo' && mediaItem.type !== 'video' && mediaItem.type !== 'animated_gif');
+            });
 
-          if (onlyPhotos) emit(doc._id, doc);
+            if (onlyPhotos) emit(doc._id, doc);
+          }
         }
       }
     }

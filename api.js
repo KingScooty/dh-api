@@ -6,6 +6,7 @@ const Morgan = require('koa-morgan');
 const Promise = require('bluebird');
 const co = Promise.coroutine;
 
+const init = require('./init')();
 // middleware
 
 const Koa = require('koa');
@@ -36,7 +37,8 @@ const errorMiddleware = require('./middleware/errors');
 api.use(errorMiddleware());
 
 const router = require('./routes/')(api);
-// router(api);
+
+
 
 api.use(logger);
 
