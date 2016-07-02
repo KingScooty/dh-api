@@ -48,6 +48,13 @@ router.get('/latest/tweets', co(function *(ctx, next) {
   ctx.body = yield eventModel.findByType(year_query, 'tweets', 'all_tweets');
 }));
 
+router.get('/latest/tweets/photos', co(function *(ctx, next) {
+  var year_query = LATEST;
+  if (!databaseList.hasOwnProperty(year_query)) return ctx.throw(404);
+
+  ctx.body = yield eventModel.findByType(year_query, 'tweets', 'with_photos');
+}));
+
  /**
   * GET hashtags by latest/hashtags.
   */
@@ -95,6 +102,30 @@ router.get('/:year/tweets', co(function *(ctx, next) {
 
   ctx.body = yield eventModel.findByType(year_query, 'tweets', 'all_tweets');
 }));
+
+/**
+ * GET tweets by :year/tweets/photos.
+ */
+
+router.get('/:year/tweets/photos', co(function *(ctx, next) {
+  var year_query = `dh_${ctx.params.year}`;
+  if (!databaseList.hasOwnProperty(year_query)) return ctx.throw(404);
+
+  ctx.body = yield eventModel.findByType(year_query, 'tweets', 'with_photos');
+}));
+
+router.get('/:year/tweets/photos/random', co(function *(ctx, next) {
+  var year_query = `dh_${ctx.params.year}`;
+  if (!databaseList.hasOwnProperty(year_query)) return ctx.throw(404);
+
+  var response = yield eventModel.findByType(year_query, 'tweets', 'with_photos');
+  var length = response.body.length;
+  ctx.body = {
+    success: true,
+    body: response.body[Math.floor(Math.random()*length)]
+  }
+}));
+
 
 /**
  * GET hashtags by :year/hashtags.

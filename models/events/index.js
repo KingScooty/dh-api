@@ -39,6 +39,15 @@ eventModel.syncDesignDoc = function syncDesignDoc(dbName, callback) {
         map: function (doc) {
           if (doc.type === 'info') emit(doc._id, doc);
         }
+      },
+      "with_photos": {
+        map: function(doc) {
+          var onlyPhotos = doc.extended_entities.media.every(function(mediaItem) {
+              return (mediaItem.type === 'photo' && mediaItem.type !== 'video' && mediaItem.type !== 'animated_gif');
+          });
+
+          if (onlyPhotos) emit(doc._id, doc);
+        }
       }
     }
   };
