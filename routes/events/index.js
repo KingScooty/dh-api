@@ -5,6 +5,8 @@ const co = Promise.coroutine;
 const databaseList = require('../../db').databaseList;
 const eventModel = require('../../models/events');
 
+const eventHelpers = require('../../helpers/events');
+
 // const eventModel = new Event();
 
 const api = 'api/events';
@@ -19,7 +21,6 @@ router.get('/', (ctx, next) => {
     body: 'All the events!'
   }
 });
-
 
 /**
  * GET latest
@@ -69,6 +70,37 @@ router.get('/latest/hashtags', co(function *(ctx, next) {
   }
 }));
 
+/**
+ * GET random
+ */
+
+ router.get('/random/tweet', co(function *(ctx, next) {
+   var year_query = eventHelpers.getRandomYear(Object.keys(databaseList));
+   if (!databaseList.hasOwnProperty(year_query)) return ctx.throw(404);
+
+  var response = yield eventModel.findByType(year_query, 'tweets', 'all_tweets');
+  var length = response.body.length;
+  var random = Math.floor(Math.random()*length);
+
+  ctx.body = {
+    success: true,
+    body: response.body[random]
+  }
+ }));
+
+ router.get('/random/tweet/photos', co(function *(ctx, next) {
+   var year_query = eventHelpers.getRandomYear(Object.keys(databaseList));
+   if (!databaseList.hasOwnProperty(year_query)) return ctx.throw(404);
+
+  var response = yield eventModel.findByType(year_query, 'tweets', 'with_photos');
+  var length = response.body.length;
+  var random = Math.floor(Math.random()*length);
+
+  ctx.body = {
+    success: true,
+    body: response.body[random]
+  }
+ }));
 
 /**
  * GET year by :year.
@@ -120,9 +152,11 @@ router.get('/:year/tweets/photos/random', co(function *(ctx, next) {
 
   var response = yield eventModel.findByType(year_query, 'tweets', 'with_photos');
   var length = response.body.length;
+  var random = Math.floor(Math.random()*length);
+
   ctx.body = {
     success: true,
-    body: response.body[Math.floor(Math.random()*length)]
+    body: response.body[random]
   }
 }));
 
