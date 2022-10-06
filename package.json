@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node index.js",
     "test": "mocha",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "prepublish": "npm run snyk-protect",
+    "snyk-protect": "snyk-protect"
   },
   "babel": {
     "presets": [
@@ -35,7 +37,9 @@
     "koa-morgan": "^1.0.1",
     "koa-router": "^7.0.1",
     "lodash": "^4.13.1",
-    "socket.io": "^1.4.5",
-    "spdy": "^3.3.1"
-  }
+    "socket.io": "^3.0.0",
+    "spdy": "^3.3.1",
+    "@snyk/protect": "latest"
+  },
+  "snyk": true
 }
