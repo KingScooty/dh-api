@@ -29,7 +29,7 @@
   "dependencies": {
     "bluebird": "^3.3.4",
     "cradle": "^0.7.1",
-    "glob": "^7.0.3",
+    "glob": "^9.0.0",
     "koa": "^2.0.0",
     "koa-compress": "^2.0.0",
     "koa-morgan": "^1.0.1",
